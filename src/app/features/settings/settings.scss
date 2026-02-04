@@ -1,0 +1,9 @@
+.settings {
+  display: grid;
+  place-items: center;
+  padding: 24px;
+}
+
+mat-card {
+  width: min(640px, 100%);
+}

@@ -1,0 +1,36 @@
+.jobs-list {
+  display: grid;
+  gap: 20px;
+}
+
+.jobs-list__header {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.jobs-list__header h2 {
+  margin: 0 0 4px;
+}
+
+.jobs-list__header p {
+  margin: 0;
+  color: rgba(0, 0, 0, 0.64);
+}
+
+.jobs-list__grid {
+  display: grid;
+  gap: 16px;
+}
+
+@media (min-width: 900px) {
+  .jobs-list__header {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .jobs-list__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}

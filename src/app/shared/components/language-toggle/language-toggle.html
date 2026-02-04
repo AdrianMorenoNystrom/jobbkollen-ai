@@ -1,0 +1,12 @@
+<mat-button-toggle-group
+  class="language-toggle"
+  [value]="i18n.language()"
+  (change)="setLanguage($event.value)"
+  aria-label="Language"
+>
+  @for (language of languages; track language.value) {
+    <mat-button-toggle [value]="language.value">
+      {{ language.label }}
+    </mat-button-toggle>
+  }
+</mat-button-toggle-group>

@@ -1,0 +1,47 @@
+.shell {
+  min-height: 100vh;
+}
+
+.shell__sidenav {
+  width: 240px;
+}
+
+.shell__brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 20px 8px;
+  font-weight: 600;
+}
+
+.shell__brand-text {
+  letter-spacing: 0.02em;
+}
+
+.shell__toolbar {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+}
+
+.shell__title {
+  font-weight: 600;
+}
+
+.shell__spacer {
+  flex: 1;
+}
+
+.shell__content {
+  padding: 16px;
+}
+
+a.active {
+  background: rgba(0, 0, 0, 0.04);
+}
+
+@media (min-width: 960px) {
+  .shell__content {
+    padding: 24px;
+  }
+}
