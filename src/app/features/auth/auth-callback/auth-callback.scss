@@ -1,0 +1,22 @@
+.auth-callback {
+  display: grid;
+  place-items: center;
+  min-height: calc(100vh - 80px);
+  padding: 24px;
+}
+
+mat-card {
+  width: min(420px, 100%);
+}
+
+.auth-callback__status {
+  display: grid;
+  gap: 12px;
+  justify-items: center;
+  padding: 8px 0 4px;
+}
+
+.auth-callback__status p {
+  margin: 0;
+  color: rgba(0, 0, 0, 0.6);
+}

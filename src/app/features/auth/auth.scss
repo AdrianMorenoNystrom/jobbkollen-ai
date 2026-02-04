@@ -8,3 +8,18 @@
 mat-card {
   width: min(480px, 100%);
 }
+
+.auth__form {
+  display: grid;
+  gap: 16px;
+}
+
+.auth__status {
+  margin-top: 16px;
+  min-height: 32px;
+  color: rgba(0, 0, 0, 0.6);
+}
+
+.auth__status p {
+  margin: 0;
+}
