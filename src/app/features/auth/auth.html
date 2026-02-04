@@ -1,14 +1,63 @@
 <div class="auth">
   <mat-card>
     <mat-card-header>
-      <mat-card-title>OTP</mat-card-title>
-      <mat-card-subtitle>Email</mat-card-subtitle>
+      <mat-card-title>{{ 'auth.title' | t }}</mat-card-title>
+      <mat-card-subtitle>{{ 'auth.subtitle' | t }}</mat-card-subtitle>
     </mat-card-header>
     <mat-card-content>
-      <p>Auth UI kommer i nästa milestone.</p>
+      <form class="auth__form" [formGroup]="form">
+        <mat-form-field appearance="outline">
+          <mat-label>{{ 'auth.emailLabel' | t }}</mat-label>
+          <input matInput type="email" formControlName="email" autocomplete="email" />
+          <mat-error>{{ 'auth.emailError' | t }}</mat-error>
+        </mat-form-field>
+
+        @if (otpSent) {
+          <mat-form-field appearance="outline">
+            <mat-label>{{ 'auth.codeLabel' | t }}</mat-label>
+            <input
+              matInput
+              type="text"
+              formControlName="code"
+              autocomplete="one-time-code"
+            />
+            <mat-error>{{ 'auth.codeError' | t }}</mat-error>
+          </mat-form-field>
+        }
+      </form>
+
+      <div class="auth__status" aria-live="polite">
+        @if (isLoading) {
+          <mat-progress-spinner diameter="28" mode="indeterminate"></mat-progress-spinner>
+        } @else if (otpSent) {
+          <p>{{ 'auth.codeHint' | t }}</p>
+        } @else {
+          <p>{{ 'auth.emailHint' | t }}</p>
+        }
+      </div>
     </mat-card-content>
     <mat-card-actions align="end">
-      <button mat-stroked-button color="primary">{{ 'landing.ctaLogin' | t }}</button>
+      @if (!otpSent) {
+        <button
+          mat-flat-button
+          color="primary"
+          type="button"
+          [disabled]="isLoading"
+          (click)="sendOtp()"
+        >
+          {{ 'auth.sendCode' | t }}
+        </button>
+      } @else {
+        <button
+          mat-flat-button
+          color="primary"
+          type="button"
+          [disabled]="isLoading"
+          (click)="verifyOtp()"
+        >
+          {{ 'auth.verifyCode' | t }}
+        </button>
+      }
     </mat-card-actions>
   </mat-card>
 </div>

@@ -1,24 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { Auth } from './auth';
-import { AuthService } from '../../core/services/auth.service';
-import { ProfileService } from '../../core/services/profile.service';
+import { AuthCallback } from './auth-callback';
+import { AuthService } from '../../../core/services/auth.service';
+import { ProfileService } from '../../../core/services/profile.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 
-describe('Auth', () => {
-  let component: Auth;
-  let fixture: ComponentFixture<Auth>;
+describe('AuthCallback', () => {
+  let fixture: ComponentFixture<AuthCallback>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [Auth],
+      imports: [AuthCallback],
       providers: [
         {
           provide: AuthService,
-          useValue: {
-            signInWithOtp: () => Promise.resolve({ error: null }),
-            verifyOtp: () => Promise.resolve({ error: null })
-          }
+          useValue: { getSession: () => Promise.resolve(null) }
         },
         {
           provide: ProfileService,
@@ -33,15 +29,13 @@ describe('Auth', () => {
           useValue: { navigate: () => Promise.resolve(true) }
         }
       ]
-    })
-    .compileComponents();
+    }).compileComponents();
 
-    fixture = TestBed.createComponent(Auth);
-    component = fixture.componentInstance;
+    fixture = TestBed.createComponent(AuthCallback);
     await fixture.whenStable();
   });
 
   it('should create', () => {
-    expect(component).toBeTruthy();
+    expect(fixture.componentInstance).toBeTruthy();
   });
 });
