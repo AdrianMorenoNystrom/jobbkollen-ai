@@ -33,6 +33,26 @@ const TRANSLATIONS: TranslationMap = {
     sv: 'Inställningsformulär kommer i nästa milstolpe.',
     en: 'Settings form will arrive in the next milestone.'
   },
+  'settings.languageLabel': { sv: 'Språk', en: 'Language' },
+  'settings.languageHint': { sv: 'Välj språk för appen.', en: 'Choose the app language.' },
+  'settings.languageError': { sv: 'Välj ett språk.', en: 'Select a language.' },
+  'settings.languageSv': { sv: 'Svenska', en: 'Swedish' },
+  'settings.languageEn': { sv: 'Engelska', en: 'English' },
+  'settings.reminderEmailLabel': { sv: 'Påminnelsemejl', en: 'Reminder email' },
+  'settings.reminderEmailHint': {
+    sv: 'Valfritt. Används för påminnelser.',
+    en: 'Optional. Used for reminders.'
+  },
+  'settings.reminderEmailError': {
+    sv: 'Ange en giltig e-postadress.',
+    en: 'Enter a valid email address.'
+  },
+  'settings.remindersEnabledLabel': { sv: 'Aktivera påminnelser', en: 'Enable reminders' },
+  'settings.remindersEnabledHint': {
+    sv: 'Få e-postpåminnelser om uppföljningar.',
+    en: 'Get email reminders about follow-ups.'
+  },
+  'settings.saved': { sv: 'Inställningar sparade.', en: 'Settings saved.' },
   'auth.title': { sv: 'Logga in', en: 'Sign in' },
   'auth.subtitle': { sv: 'Få en engångskod via e-post', en: 'Get a one-time code by email' },
   'auth.emailLabel': { sv: 'E-post', en: 'Email' },

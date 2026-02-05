@@ -48,4 +48,14 @@ export class ProfileService {
 
     return this.client.from('profiles').upsert({ id: userId, ...profile });
   }
+
+  async updateMyProfile(profile: Partial<Profile>) {
+    const session = await this.auth.getSession();
+    const userId = session?.user.id;
+    if (!userId) {
+      throw new Error('Not authenticated');
+    }
+
+    return this.client.from('profiles').update(profile).eq('id', userId);
+  }
 }
