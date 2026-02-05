@@ -1,0 +1,18 @@
+<h2 mat-dialog-title>{{ 'jobs.delete.title' | t }}</h2>
+<mat-dialog-content>
+  <p>{{ 'jobs.delete.body' | t }}</p>
+  <p class="delete-job__meta">
+    {{ data.title }}
+    @if (data.company) {
+      <span>· {{ data.company }}</span>
+    }
+  </p>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-stroked-button type="button" [mat-dialog-close]="false">
+    {{ 'jobs.delete.cancel' | t }}
+  </button>
+  <button mat-flat-button color="warn" type="button" [mat-dialog-close]="true">
+    {{ 'jobs.delete.confirm' | t }}
+  </button>
+</mat-dialog-actions>

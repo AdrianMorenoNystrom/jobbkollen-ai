@@ -10,22 +10,113 @@
     </a>
   </div>
 
-  <div class="jobs-list__grid">
-    @for (job of sampleJobs; track job.title) {
-      <mat-card>
-        <mat-card-header>
-          <mat-card-title>{{ job.title }}</mat-card-title>
-          <mat-card-subtitle>{{ job.company }} · {{ job.location }}</mat-card-subtitle>
-        </mat-card-header>
-        <mat-card-content>
-          <p>{{ 'jobs.statusLabel' | t }}: {{ job.status }}</p>
-        </mat-card-content>
-        <mat-card-actions align="end">
-          <a mat-button color="primary" routerLink="/app/jobs/1/edit">
-            {{ 'common.edit' | t }}
-          </a>
-        </mat-card-actions>
-      </mat-card>
+  <div class="jobs-list__filters">
+    <mat-form-field appearance="outline">
+      <mat-label>{{ 'jobs.filter.searchLabel' | t }}</mat-label>
+      <input
+        matInput
+        [formControl]="searchControl"
+        [placeholder]="'jobs.filter.searchPlaceholder' | t"
+        autocomplete="off"
+      />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>{{ 'jobs.filter.statusLabel' | t }}</mat-label>
+      <mat-select [formControl]="statusControl">
+        @for (status of statusOptions; track status) {
+          <mat-option [value]="status">
+            @if (status === 'all') {
+              {{ 'jobs.filter.allStatuses' | t }}
+            } @else {
+              {{ statusLabel(status) }}
+            }
+          </mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <div class="jobs-list__status" aria-live="polite">
+    @if (isLoading) {
+      <mat-progress-spinner diameter="28" mode="indeterminate"></mat-progress-spinner>
     }
   </div>
+
+  @if (isLoading) {
+    <div class="jobs-list__placeholder" aria-hidden="true"></div>
+  } @else if (jobs.length === 0) {
+    <mat-card class="jobs-list__empty">
+      <mat-card-header>
+        <mat-card-title>{{ 'jobs.empty.title' | t }}</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <p>{{ 'jobs.empty.body' | t }}</p>
+      </mat-card-content>
+      <mat-card-actions align="end">
+        <a mat-flat-button color="primary" routerLink="/app/jobs/new">
+          {{ 'jobs.empty.cta' | t }}
+        </a>
+      </mat-card-actions>
+    </mat-card>
+  } @else if (filteredJobs.length === 0) {
+    <mat-card class="jobs-list__empty">
+      <mat-card-header>
+        <mat-card-title>{{ 'jobs.noResults.title' | t }}</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <p>{{ 'jobs.noResults.body' | t }}</p>
+      </mat-card-content>
+    </mat-card>
+  } @else {
+    <div class="jobs-list__grid">
+      @for (job of filteredJobs; track job.id) {
+        <mat-card class="jobs-list__card">
+          <mat-card-header>
+            <mat-card-title>{{ job.title }}</mat-card-title>
+            <mat-card-subtitle>
+              {{ job.company }} · {{ job.location || ('jobs.locationUnknown' | t) }}
+            </mat-card-subtitle>
+          </mat-card-header>
+          <mat-card-content>
+            <div class="jobs-list__meta">
+              <span class="jobs-list__label">{{ 'jobs.appliedOn' | t }}</span>
+              <span>
+                @if (job.applied_on) {
+                  {{ job.applied_on | date: 'mediumDate' }}
+                } @else {
+                  {{ 'jobs.appliedOnUnknown' | t }}
+                }
+              </span>
+            </div>
+            <mat-chip-set>
+              <mat-chip class="jobs-list__status-chip" [ngClass]="statusClass(job.status)">
+                {{ statusLabel(job.status) }}
+              </mat-chip>
+            </mat-chip-set>
+          </mat-card-content>
+          <mat-card-actions align="end">
+            <a
+              mat-button
+              color="primary"
+              [routerLink]="['/app/jobs', job.id, 'edit']"
+              [attr.aria-label]="('jobs.editAria' | t) + ' ' + job.title"
+            >
+              <mat-icon aria-hidden="true">edit</mat-icon>
+              {{ 'common.edit' | t }}
+            </a>
+            <button
+              mat-icon-button
+              color="warn"
+              type="button"
+              (click)="confirmDelete(job)"
+              [attr.aria-label]="('jobs.deleteAria' | t) + ' ' + job.title"
+            >
+              <mat-icon aria-hidden="true">delete</mat-icon>
+            </button>
+          </mat-card-actions>
+        </mat-card>
+      }
+    </div>
+  }
 </div>

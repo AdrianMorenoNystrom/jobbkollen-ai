@@ -18,9 +18,78 @@
   color: rgba(0, 0, 0, 0.64);
 }
 
+.jobs-list__filters {
+  display: grid;
+  gap: 16px;
+}
+
+.jobs-list__filters mat-form-field {
+  width: 100%;
+}
+
+.jobs-list__status {
+  min-height: 32px;
+  display: flex;
+  align-items: center;
+}
+
+.jobs-list__placeholder {
+  min-height: 1px;
+}
+
 .jobs-list__grid {
   display: grid;
   gap: 16px;
+}
+
+.jobs-list__card mat-card-content {
+  display: grid;
+  gap: 12px;
+}
+
+.jobs-list__meta {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  align-items: baseline;
+}
+
+.jobs-list__label {
+  font-weight: 600;
+}
+
+.jobs-list__status-chip {
+  text-transform: capitalize;
+}
+
+.jobs-list__status-chip--applied {
+  background: #e0f2fe;
+  color: #0c4a6e;
+}
+
+.jobs-list__status-chip--interview {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+.jobs-list__status-chip--offer {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.jobs-list__status-chip--rejected {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+.jobs-list__status-chip--withdrawn {
+  background: #e2e8f0;
+  color: #334155;
+}
+
+.jobs-list__empty p {
+  margin: 0;
+  color: rgba(0, 0, 0, 0.64);
 }
 
 @media (min-width: 900px) {
@@ -28,6 +97,11 @@
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
+  }
+
+  .jobs-list__filters {
+    grid-template-columns: 2fr 1fr;
+    align-items: end;
   }
 
   .jobs-list__grid {
