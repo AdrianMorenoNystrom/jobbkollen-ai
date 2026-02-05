@@ -5,13 +5,100 @@
       <mat-card-subtitle>{{ 'settings.subtitle' | t }}</mat-card-subtitle>
     </mat-card-header>
     <mat-card-content>
-      <p>{{ 'settings.placeholder' | t }}</p>
+      <form class="settings__form" [formGroup]="form">
+        <mat-form-field appearance="outline">
+          <mat-label>{{ 'onboarding.firstNameLabel' | t }}</mat-label>
+          <input matInput formControlName="first_name" autocomplete="given-name" />
+          @if (form.controls.first_name.touched && form.controls.first_name.invalid) {
+            <mat-error>{{ 'onboarding.firstNameError' | t }}</mat-error>
+          }
+        </mat-form-field>
+
+        <div class="settings__palette">
+          <div class="settings__palette-header">
+            <div>
+              <h3>{{ 'onboarding.avatarTitle' | t }}</h3>
+              <p>{{ 'onboarding.avatarSubtitle' | t }}</p>
+            </div>
+            <app-avatar
+              [name]="form.controls.first_name.value"
+              [color]="form.controls.avatar_color.value"
+            ></app-avatar>
+          </div>
+
+          <mat-button-toggle-group
+            class="settings__palette-grid"
+            formControlName="avatar_color"
+            [attr.aria-label]="'onboarding.avatarAria' | t"
+          >
+            @for (color of colors; track color.id) {
+              <mat-button-toggle
+                [value]="color.id"
+                class="palette__option palette__option--{{ color.id }}"
+                [attr.aria-label]="('onboarding.colorPrefix' | t) + ' ' + (color.labelKey | t)"
+              >
+                <span class="palette__dot"></span>
+              </mat-button-toggle>
+            }
+          </mat-button-toggle-group>
+
+          @if (form.controls.avatar_color.touched && form.controls.avatar_color.invalid) {
+            <p class="settings__error">{{ 'onboarding.avatarError' | t }}</p>
+          }
+        </div>
+
+        <mat-form-field appearance="outline">
+          <mat-label>{{ 'settings.languageLabel' | t }}</mat-label>
+          <mat-select
+            formControlName="preferred_language"
+            (selectionChange)="onLanguageChange($event.value)"
+          >
+            @for (language of languages; track language.value) {
+              <mat-option [value]="language.value">{{ language.labelKey | t }}</mat-option>
+            }
+          </mat-select>
+          <mat-hint>{{ 'settings.languageHint' | t }}</mat-hint>
+          @if (form.controls.preferred_language.touched && form.controls.preferred_language.invalid) {
+            <mat-error>{{ 'settings.languageError' | t }}</mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>{{ 'settings.reminderEmailLabel' | t }}</mat-label>
+          <input matInput type="email" formControlName="reminder_email" autocomplete="email" />
+          <mat-hint>{{ 'settings.reminderEmailHint' | t }}</mat-hint>
+          @if (form.controls.reminder_email.touched && form.controls.reminder_email.invalid) {
+            <mat-error>{{ 'settings.reminderEmailError' | t }}</mat-error>
+          }
+        </mat-form-field>
+
+        <div class="settings__toggle">
+          <mat-slide-toggle formControlName="reminders_enabled">
+            {{ 'settings.remindersEnabledLabel' | t }}
+          </mat-slide-toggle>
+          <p class="settings__hint">{{ 'settings.remindersEnabledHint' | t }}</p>
+        </div>
+      </form>
+
+      <div class="settings__status" aria-live="polite">
+        @if (isSaving || isLoading) {
+          <mat-progress-spinner diameter="28" mode="indeterminate"></mat-progress-spinner>
+        }
+      </div>
     </mat-card-content>
     <mat-card-actions align="end">
-      <button mat-stroked-button type="button" (click)="signOut()">
+      <button mat-stroked-button type="button" (click)="signOut()" [disabled]="isSaving || isLoading">
         {{ 'menu.signOut' | t }}
       </button>
-      <button mat-flat-button color="primary">{{ 'common.save' | t }}</button>
+      <button
+        mat-flat-button
+        color="primary"
+        type="button"
+        [disabled]="isSaving || isLoading"
+        (click)="save()"
+      >
+        {{ 'common.save' | t }}
+      </button>
     </mat-card-actions>
   </mat-card>
 </div>

@@ -1,9 +1,133 @@
 .settings {
   display: grid;
   place-items: center;
+  min-height: calc(100vh - 80px);
   padding: 24px;
 }
 
 mat-card {
-  width: min(640px, 100%);
+  width: min(720px, 100%);
+}
+
+.settings__form {
+  display: grid;
+  gap: 20px;
+}
+
+.settings__palette {
+  display: grid;
+  gap: 12px;
+}
+
+.settings__palette-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.settings__palette-header h3 {
+  margin: 0 0 4px;
+}
+
+.settings__palette-header p {
+  margin: 0;
+  color: rgba(0, 0, 0, 0.6);
+}
+
+.settings__palette-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.settings__error {
+  margin: 0;
+  color: #b00020;
+  font-size: 0.75rem;
+}
+
+.settings__toggle {
+  display: grid;
+  gap: 6px;
+}
+
+.settings__hint {
+  margin: 0;
+  color: rgba(0, 0, 0, 0.6);
+  font-size: 0.85rem;
+}
+
+.settings__status {
+  margin-top: 16px;
+  min-height: 32px;
+  display: flex;
+  align-items: center;
+}
+
+.palette__option {
+  height: 48px;
+}
+
+.palette__dot {
+  display: block;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+.palette__option--sunset {
+  color: #f97316;
+}
+
+.palette__option--coral {
+  color: #fb7185;
+}
+
+.palette__option--rose {
+  color: #f43f5e;
+}
+
+.palette__option--plum {
+  color: #a855f7;
+}
+
+.palette__option--indigo {
+  color: #6366f1;
+}
+
+.palette__option--sky {
+  color: #38bdf8;
+}
+
+.palette__option--teal {
+  color: #14b8a6;
+}
+
+.palette__option--emerald {
+  color: #22c55e;
+}
+
+.palette__option--lime {
+  color: #84cc16;
+}
+
+.palette__option--amber {
+  color: #f59e0b;
+}
+
+.palette__option--slate {
+  color: #64748b;
+}
+
+.palette__option--chocolate {
+  color: #b45309;
+}
+
+@media (min-width: 640px) {
+  .settings__palette-grid {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+  }
 }
