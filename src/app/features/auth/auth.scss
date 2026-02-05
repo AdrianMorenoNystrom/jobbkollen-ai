@@ -23,3 +23,9 @@ mat-card {
 .auth__status p {
   margin: 0;
 }
+
+.auth__actions {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+}

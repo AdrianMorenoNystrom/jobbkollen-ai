@@ -6,9 +6,10 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../core/services/auth.service';
 import { ProfileService } from '../../core/services/profile.service';
+import { I18nService } from '../../core/i18n/i18n.service';
 import { TranslatePipe } from '../../shared/pipes/translate.pipe';
 
 @Component({
@@ -21,7 +22,8 @@ import { TranslatePipe } from '../../shared/pipes/translate.pipe';
     MatInputModule,
     MatSnackBarModule,
     MatProgressSpinnerModule,
-    TranslatePipe
+    TranslatePipe,
+    RouterLink
   ],
   templateUrl: './auth.html',
   styleUrl: './auth.scss'
@@ -38,6 +40,7 @@ export class Auth {
   constructor(
     private readonly auth: AuthService,
     private readonly profileService: ProfileService,
+    private readonly i18n: I18nService,
     private readonly snackBar: MatSnackBar,
     private readonly router: Router
   ) {}
@@ -54,12 +57,14 @@ export class Auth {
     this.isLoading = false;
 
     if (error) {
-      this.snackBar.open(error.message, 'OK', { duration: 4000 });
+      this.snackBar.open(error.message, this.i18n.translate('common.ok'), { duration: 4000 });
       return;
     }
 
     this.otpSent = true;
-    this.snackBar.open('Vi har skickat en kod till din e-post.', 'OK', { duration: 4000 });
+    this.snackBar.open(this.i18n.translate('auth.otpSent'), this.i18n.translate('common.ok'), {
+      duration: 4000
+    });
   }
 
   async verifyOtp() {
@@ -76,7 +81,7 @@ export class Auth {
     this.isLoading = false;
 
     if (error) {
-      this.snackBar.open(error.message, 'OK', { duration: 4000 });
+      this.snackBar.open(error.message, this.i18n.translate('common.ok'), { duration: 4000 });
       return;
     }
 

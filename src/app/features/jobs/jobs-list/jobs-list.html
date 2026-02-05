@@ -1,12 +1,12 @@
 <div class="jobs-list">
   <div class="jobs-list__header">
     <div>
-      <h2>Jobb</h2>
-      <p>Översikt över dina ansökningar.</p>
+      <h2>{{ 'nav.jobs' | t }}</h2>
+      <p>{{ 'jobs.subtitle' | t }}</p>
     </div>
     <a mat-flat-button color="primary" routerLink="/app/jobs/new">
       <mat-icon aria-hidden="true">add</mat-icon>
-      Skapa jobb
+      {{ 'nav.newJob' | t }}
     </a>
   </div>
 
@@ -18,10 +18,12 @@
           <mat-card-subtitle>{{ job.company }} · {{ job.location }}</mat-card-subtitle>
         </mat-card-header>
         <mat-card-content>
-          <p>Status: {{ job.status }}</p>
+          <p>{{ 'jobs.statusLabel' | t }}: {{ job.status }}</p>
         </mat-card-content>
         <mat-card-actions align="end">
-          <a mat-button color="primary" routerLink="/app/jobs/1/edit">Redigera</a>
+          <a mat-button color="primary" routerLink="/app/jobs/1/edit">
+            {{ 'common.edit' | t }}
+          </a>
         </mat-card-actions>
       </mat-card>
     }

@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { AppLanguage, I18nService } from '../../../core/i18n/i18n.service';
+import { TranslatePipe } from '../../pipes/translate.pipe';
 
 @Component({
   selector: 'app-language-toggle',
-  imports: [MatButtonToggleModule],
+  imports: [MatButtonToggleModule, TranslatePipe],
   templateUrl: './language-toggle.html',
   styleUrl: './language-toggle.scss'
 })

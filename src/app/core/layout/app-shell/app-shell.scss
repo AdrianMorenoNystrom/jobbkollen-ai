@@ -36,6 +36,17 @@
   padding: 16px;
 }
 
+.shell__user-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-left: 8px;
+}
+
+.shell__user-name {
+  font-weight: 500;
+}
+
 a.active {
   background: rgba(0, 0, 0, 0.04);
 }
@@ -43,5 +54,11 @@ a.active {
 @media (min-width: 960px) {
   .shell__content {
     padding: 24px;
+  }
+}
+
+@media (max-width: 640px) {
+  .shell__user-name {
+    display: none;
   }
 }

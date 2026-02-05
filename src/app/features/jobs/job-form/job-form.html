@@ -1,15 +1,15 @@
 <div class="job-form">
   <mat-card>
     <mat-card-header>
-      <mat-card-title>Jobbformulär</mat-card-title>
-      <mat-card-subtitle>Skapa eller uppdatera jobb</mat-card-subtitle>
+      <mat-card-title>{{ 'jobForm.title' | t }}</mat-card-title>
+      <mat-card-subtitle>{{ 'jobForm.subtitle' | t }}</mat-card-subtitle>
     </mat-card-header>
     <mat-card-content>
-      <p>Formulärfält kommer i nästa milestone.</p>
+      <p>{{ 'jobForm.placeholder' | t }}</p>
     </mat-card-content>
     <mat-card-actions align="end">
-      <button mat-stroked-button routerLink="/app/jobs">Avbryt</button>
-      <button mat-flat-button color="primary">Spara</button>
+      <button mat-stroked-button routerLink="/app/jobs">{{ 'common.cancel' | t }}</button>
+      <button mat-flat-button color="primary">{{ 'common.save' | t }}</button>
     </mat-card-actions>
   </mat-card>
 </div>
