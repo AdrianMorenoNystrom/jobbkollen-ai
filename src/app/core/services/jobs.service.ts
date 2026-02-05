@@ -7,9 +7,16 @@ export interface Job {
   user_id: string;
   title: string;
   company: string;
-  location: string | null;
-  applied_on: string | null;
+  location: string;
+  applied_on: string;
   status: string;
+  job_url?: string | null;
+  notes?: string | null;
+  follow_up_preset?: string | null;
+  follow_up_on?: string | null;
+  reminder_sent_at?: string | null;
+  created_at?: string;
+  updated_at?: string;
 }
 
 @Injectable({ providedIn: 'root' })
@@ -41,7 +48,7 @@ export class JobsService {
     }
 
     const { data, error } = await this.supabase.client
-      .from('jobs')
+      .from('job_applications')
       .select('*')
       .eq('id', id)
       .eq('user_id', userId)
@@ -57,7 +64,11 @@ export class JobsService {
       return { error: { message: 'Not authenticated' } };
     }
 
-    const { error } = await this.supabase.client.from('jobs').delete().eq('id', id).eq('user_id', userId);
+    const { error } = await this.supabase.client
+      .from('job_applications')
+      .delete()
+      .eq('id', id)
+      .eq('user_id', userId);
     return { error: error ? { message: error.message } : null };
   }
 }

@@ -97,7 +97,7 @@ export class JobsList {
     const { error } = await this.jobsService.deleteJob(job.id);
     if (error) {
       this.snackBar.open(
-        error.message || this.i18n.translate('jobs.deleteError'),
+        error.message || this.i18n.translate('jobs.delete.error'),
         this.i18n.translate('common.ok'),
         { duration: 4000 }
       );
@@ -106,9 +106,11 @@ export class JobsList {
 
     this.jobs = this.jobs.filter((item) => item.id !== job.id);
     this.updateStatusOptions(this.jobs);
-    this.snackBar.open(this.i18n.translate('jobs.deleteSuccess'), this.i18n.translate('common.ok'), {
-      duration: 3000
-    });
+    this.snackBar.open(
+      this.i18n.translate('jobs.delete.success'),
+      this.i18n.translate('common.ok'),
+      { duration: 3000 }
+    );
   }
 
   private async loadJobs(): Promise<void> {
