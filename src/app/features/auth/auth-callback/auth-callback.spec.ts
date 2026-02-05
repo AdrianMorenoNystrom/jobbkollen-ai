@@ -4,6 +4,7 @@ import { AuthService } from '../../../core/services/auth.service';
 import { ProfileService } from '../../../core/services/profile.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
+import { I18nService } from '../../../core/i18n/i18n.service';
 
 describe('AuthCallback', () => {
   let fixture: ComponentFixture<AuthCallback>;
@@ -27,6 +28,10 @@ describe('AuthCallback', () => {
         {
           provide: Router,
           useValue: { navigate: () => Promise.resolve(true) }
+        },
+        {
+          provide: I18nService,
+          useValue: { translate: (key: string) => key, language: () => 'sv' }
         }
       ]
     }).compileComponents();

@@ -1,15 +1,17 @@
 <div class="settings">
   <mat-card>
     <mat-card-header>
-      <mat-card-title>Inställningar</mat-card-title>
-      <mat-card-subtitle>Profil och påminnelser</mat-card-subtitle>
+      <mat-card-title>{{ 'settings.title' | t }}</mat-card-title>
+      <mat-card-subtitle>{{ 'settings.subtitle' | t }}</mat-card-subtitle>
     </mat-card-header>
     <mat-card-content>
-      <p>Inställningsformulär kommer i nästa milestone.</p>
+      <p>{{ 'settings.placeholder' | t }}</p>
     </mat-card-content>
     <mat-card-actions align="end">
-      <button mat-stroked-button type="button" (click)="signOut()">Logga ut</button>
-      <button mat-flat-button color="primary">Spara</button>
+      <button mat-stroked-button type="button" (click)="signOut()">
+        {{ 'menu.signOut' | t }}
+      </button>
+      <button mat-flat-button color="primary">{{ 'common.save' | t }}</button>
     </mat-card-actions>
   </mat-card>
 </div>

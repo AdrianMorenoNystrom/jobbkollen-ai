@@ -21,18 +21,18 @@ export const routes: Routes = [
     path: 'auth',
     component: Auth,
     canActivate: [guestGuard],
-    title: 'JobbKollen | Auth'
+    title: 'JobbKollen | Logga in'
   },
   {
     path: 'auth/callback',
     component: AuthCallback,
-    title: 'JobbKollen | Auth'
+    title: 'JobbKollen | Slutför inloggning'
   },
   {
     path: 'onboarding',
     component: Onboarding,
     canActivate: [authGuard],
-    title: 'JobbKollen | Onboarding'
+    title: 'JobbKollen | Välkommen'
   },
   {
     path: 'app',
@@ -42,22 +42,22 @@ export const routes: Routes = [
       {
         path: 'jobs',
         component: JobsList,
-        title: 'JobbKollen | Jobs'
+        title: 'JobbKollen | Jobb'
       },
       {
         path: 'jobs/new',
         component: JobForm,
-        title: 'JobbKollen | New job'
+        title: 'JobbKollen | Skapa jobb'
       },
       {
         path: 'jobs/:id/edit',
         component: JobForm,
-        title: 'JobbKollen | Edit job'
+        title: 'JobbKollen | Redigera jobb'
       },
       {
         path: 'settings',
         component: Settings,
-        title: 'JobbKollen | Settings'
+        title: 'JobbKollen | Inställningar'
       },
       {
         path: '',

@@ -1,6 +1,11 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { AppShell } from './app-shell';
+import { AuthService } from '../../services/auth.service';
+import { ProfileService } from '../../services/profile.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
+import { of } from 'rxjs';
+import { I18nService } from '../../i18n/i18n.service';
 
 describe('AppShell', () => {
   let component: AppShell;
@@ -8,7 +13,29 @@ describe('AppShell', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [AppShell]
+      imports: [AppShell],
+      providers: [
+        {
+          provide: AuthService,
+          useValue: { authState$: of(null), signOut: () => Promise.resolve({ error: null }) }
+        },
+        {
+          provide: ProfileService,
+          useValue: { getMyProfile: () => Promise.resolve(null) }
+        },
+        {
+          provide: MatSnackBar,
+          useValue: { open: () => undefined }
+        },
+        {
+          provide: Router,
+          useValue: { navigate: () => Promise.resolve(true) }
+        },
+        {
+          provide: I18nService,
+          useValue: { translate: (key: string) => key, language: () => 'sv' }
+        }
+      ]
     })
     .compileComponents();
 

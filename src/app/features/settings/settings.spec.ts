@@ -3,6 +3,7 @@ import { Settings } from './settings';
 import { AuthService } from '../../core/services/auth.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
+import { I18nService } from '../../core/i18n/i18n.service';
 
 describe('Settings', () => {
   let component: Settings;
@@ -23,6 +24,10 @@ describe('Settings', () => {
         {
           provide: Router,
           useValue: { navigate: () => Promise.resolve(true) }
+        },
+        {
+          provide: I18nService,
+          useValue: { translate: (key: string) => key, language: () => 'sv' }
         }
       ]
     })

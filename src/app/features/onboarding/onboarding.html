@@ -1,14 +1,63 @@
 <div class="onboarding">
   <mat-card>
     <mat-card-header>
-      <mat-card-title>Onboarding</mat-card-title>
-      <mat-card-subtitle>Profiluppgifter</mat-card-subtitle>
+      <mat-card-title>{{ 'onboarding.title' | t }}</mat-card-title>
+      <mat-card-subtitle>{{ 'onboarding.subtitle' | t }}</mat-card-subtitle>
     </mat-card-header>
     <mat-card-content>
-      <p>Onboarding-formulär kommer i nästa milestone.</p>
+      <form class="onboarding__form" [formGroup]="form">
+        <mat-form-field appearance="outline">
+          <mat-label>{{ 'onboarding.firstNameLabel' | t }}</mat-label>
+          <input matInput formControlName="first_name" autocomplete="given-name" />
+          <mat-error>{{ 'onboarding.firstNameError' | t }}</mat-error>
+        </mat-form-field>
+
+        <div class="onboarding__palette">
+          <div class="onboarding__palette-header">
+            <div>
+              <h3>{{ 'onboarding.avatarTitle' | t }}</h3>
+              <p>{{ 'onboarding.avatarSubtitle' | t }}</p>
+            </div>
+            <app-avatar
+              [name]="form.controls.first_name.value ?? ''"
+              [color]="form.controls.avatar_color.value ?? ''"
+            ></app-avatar>
+          </div>
+
+          <mat-button-toggle-group
+            class="onboarding__palette-grid"
+            formControlName="avatar_color"
+            [attr.aria-label]="'onboarding.avatarAria' | t"
+          >
+            @for (color of colors; track color.id) {
+              <mat-button-toggle
+                [value]="color.id"
+                class="palette__option palette__option--{{ color.id }}"
+                [attr.aria-label]="
+                  ('onboarding.colorPrefix' | t) + ' ' + (color.labelKey | t)
+                "
+              >
+                <span class="palette__dot"></span>
+              </mat-button-toggle>
+            }
+          </mat-button-toggle-group>
+
+          @if (form.controls.avatar_color.touched && form.controls.avatar_color.invalid) {
+            <p class="onboarding__error">{{ 'onboarding.avatarError' | t }}</p>
+          }
+        </div>
+      </form>
+
+      <div class="onboarding__status" aria-live="polite">
+        @if (isSaving) {
+          <mat-progress-spinner diameter="28" mode="indeterminate"></mat-progress-spinner>
+        }
+      </div>
     </mat-card-content>
     <mat-card-actions align="end">
-      <button mat-flat-button color="primary">Spara</button>
+      <button mat-flat-button color="primary" type="button" [disabled]="isSaving" (click)="save()">
+        {{ 'onboarding.save' | t }}
+      </button>
     </mat-card-actions>
   </mat-card>
 </div>

@@ -8,3 +8,112 @@
 mat-card {
   width: min(560px, 100%);
 }
+
+.onboarding__form {
+  display: grid;
+  gap: 20px;
+}
+
+.onboarding__palette {
+  display: grid;
+  gap: 12px;
+}
+
+.onboarding__palette-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.onboarding__palette-header h3 {
+  margin: 0 0 4px;
+}
+
+.onboarding__palette-header p {
+  margin: 0;
+  color: rgba(0, 0, 0, 0.6);
+}
+
+.onboarding__palette-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.palette__option {
+  height: 48px;
+}
+
+.palette__dot {
+  display: block;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+.palette__option--sunset {
+  color: #f97316;
+}
+
+.palette__option--coral {
+  color: #fb7185;
+}
+
+.palette__option--rose {
+  color: #f43f5e;
+}
+
+.palette__option--plum {
+  color: #a855f7;
+}
+
+.palette__option--indigo {
+  color: #6366f1;
+}
+
+.palette__option--sky {
+  color: #38bdf8;
+}
+
+.palette__option--teal {
+  color: #14b8a6;
+}
+
+.palette__option--emerald {
+  color: #22c55e;
+}
+
+.palette__option--lime {
+  color: #84cc16;
+}
+
+.palette__option--amber {
+  color: #f59e0b;
+}
+
+.palette__option--slate {
+  color: #64748b;
+}
+
+.palette__option--chocolate {
+  color: #b45309;
+}
+
+.onboarding__error {
+  margin: 0;
+  color: #b00020;
+  font-size: 0.75rem;
+}
+
+.onboarding__status {
+  margin-top: 16px;
+  min-height: 32px;
+}
+
+@media (min-width: 640px) {
+  .onboarding__palette-grid {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+  }
+}

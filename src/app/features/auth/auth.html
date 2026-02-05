@@ -36,7 +36,10 @@
         }
       </div>
     </mat-card-content>
-    <mat-card-actions align="end">
+    <mat-card-actions class="auth__actions" align="end">
+      <a mat-stroked-button routerLink="/">
+        {{ 'auth.back' | t }}
+      </a>
       @if (!otpSent) {
         <button
           mat-flat-button

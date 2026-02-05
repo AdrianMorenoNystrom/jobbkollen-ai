@@ -31,7 +31,7 @@
           mat-icon-button
           type="button"
           (click)="drawer.toggle()"
-          aria-label="Open navigation menu"
+          [attr.aria-label]="'aria.openNavigation' | t"
         >
           <mat-icon>menu</mat-icon>
         </button>
@@ -39,6 +39,29 @@
       <span class="shell__title">JobbKollen</span>
       <span class="shell__spacer"></span>
       <app-language-toggle />
+      @if (profile$ | async; as profile) {
+        <button
+          mat-button
+          type="button"
+          class="shell__user-button"
+          [matMenuTriggerFor]="userMenu"
+          [attr.aria-label]="'aria.openUserMenu' | t"
+        >
+          <app-avatar [name]="profile.first_name" [color]="profile.avatar_color"></app-avatar>
+          <span class="shell__user-name">{{ profile.first_name }}</span>
+          <mat-icon>expand_more</mat-icon>
+        </button>
+      } @else {
+        <button
+          mat-icon-button
+          type="button"
+          class="shell__user-button"
+          [matMenuTriggerFor]="userMenu"
+          [attr.aria-label]="'aria.openUserMenu' | t"
+        >
+          <mat-icon>account_circle</mat-icon>
+        </button>
+      }
     </mat-toolbar>
 
     <main class="shell__content">
@@ -46,3 +69,18 @@
     </main>
   </mat-sidenav-content>
 </mat-sidenav-container>
+
+<mat-menu #userMenu="matMenu">
+  <button mat-menu-item routerLink="/app/jobs">
+    <mat-icon aria-hidden="true">work</mat-icon>
+    <span>{{ 'nav.jobs' | t }}</span>
+  </button>
+  <button mat-menu-item routerLink="/app/settings">
+    <mat-icon aria-hidden="true">settings</mat-icon>
+    <span>{{ 'nav.settings' | t }}</span>
+  </button>
+  <button mat-menu-item type="button" (click)="signOut()">
+    <mat-icon aria-hidden="true">logout</mat-icon>
+    <span>{{ 'menu.signOut' | t }}</span>
+  </button>
+</mat-menu>

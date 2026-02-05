@@ -1,0 +1,71 @@
+.avatar {
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  font-weight: 600;
+  font-size: 0.9rem;
+  background: #cbd5f5;
+  text-transform: uppercase;
+}
+
+.avatar--text-light {
+  color: #ffffff;
+}
+
+.avatar--text-dark {
+  color: #1f2937;
+}
+
+.avatar--default {
+  background: #cbd5f5;
+}
+
+.avatar--sunset {
+  background: #f97316;
+}
+
+.avatar--coral {
+  background: #fb7185;
+}
+
+.avatar--rose {
+  background: #f43f5e;
+}
+
+.avatar--plum {
+  background: #a855f7;
+}
+
+.avatar--indigo {
+  background: #6366f1;
+}
+
+.avatar--sky {
+  background: #38bdf8;
+}
+
+.avatar--teal {
+  background: #14b8a6;
+}
+
+.avatar--emerald {
+  background: #22c55e;
+}
+
+.avatar--lime {
+  background: #84cc16;
+}
+
+.avatar--amber {
+  background: #f59e0b;
+}
+
+.avatar--slate {
+  background: #64748b;
+}
+
+.avatar--chocolate {
+  background: #b45309;
+}
