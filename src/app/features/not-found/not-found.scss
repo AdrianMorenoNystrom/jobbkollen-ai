@@ -1,0 +1,15 @@
+.not-found {
+  min-height: 70vh;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+}
+
+.not-found mat-card {
+  width: min(520px, 100%);
+}
+
+.not-found p {
+  margin: 0;
+  color: rgba(0, 0, 0, 0.68);
+}

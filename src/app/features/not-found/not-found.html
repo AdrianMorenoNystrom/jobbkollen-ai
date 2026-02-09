@@ -1,0 +1,17 @@
+<div class="not-found">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>{{ 'notFound.title' | t }}</mat-card-title>
+      <mat-card-subtitle>{{ 'notFound.subtitle' | t }}</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      <p>{{ 'notFound.body' | t }}</p>
+    </mat-card-content>
+    <mat-card-actions align="end">
+      <a mat-stroked-button routerLink="/">{{ 'notFound.ctaHome' | t }}</a>
+      <a mat-flat-button color="primary" routerLink="/app/jobs">
+        {{ 'notFound.ctaJobs' | t }}
+      </a>
+    </mat-card-actions>
+  </mat-card>
+</div>

@@ -1,4 +1,4 @@
-import { DOCUMENT } from '@angular/common';
+﻿import { DOCUMENT } from '@angular/common';
 import { Injectable, effect, inject, signal } from '@angular/core';
 
 export type AppLanguage = 'sv' | 'en';
@@ -173,28 +173,98 @@ const TRANSLATIONS: TranslationMap = {
     sv: 'Samla allt på ett ställe. Följ status, lägg uppföljningar och få smarta påminnelser.',
     en: 'Keep everything in one place. Track status, add follow-ups, and get smart reminders.'
   },
+  'landing.kicker': { sv: 'Din jobbsökning, samlad.', en: 'Your job search, unified.' },
   'landing.ctaLogin': { sv: 'Logga in', en: 'Log in' },
   'landing.ctaSignup': { sv: 'Skapa konto', en: 'Create account' },
-  'landing.feature1Title': { sv: 'Struktur', en: 'Structure' },
-  'landing.feature1Body': {
-    sv: 'Kortbaserad översikt för varje ansökan.',
-    en: 'Card-based overview for each application.'
+  'route.landing.title': { sv: 'JobbKollen', en: 'JobbKollen' },
+  'route.auth.title': { sv: 'JobbKollen | Logga in', en: 'JobbKollen | Sign in' },
+  'route.authCallback.title': { sv: 'JobbKollen | Slutför inloggning', en: 'JobbKollen | Completing sign-in' },
+  'route.onboarding.title': { sv: 'JobbKollen | Välkommen', en: 'JobbKollen | Welcome' },
+  'route.jobs.title': { sv: 'JobbKollen | Jobb', en: 'JobbKollen | Jobs' },
+  'route.newJob.title': { sv: 'JobbKollen | Skapa jobb', en: 'JobbKollen | Create job' },
+  'route.editJob.title': { sv: 'JobbKollen | Redigera jobb', en: 'JobbKollen | Edit job' },
+  'route.settings.title': { sv: 'JobbKollen | Inställningar', en: 'JobbKollen | Settings' },
+  'route.notFound.title': { sv: 'JobbKollen | Hittades inte', en: 'JobbKollen | Not found' },
+  'notFound.title': { sv: 'Sidan hittades inte', en: 'Page not found' },
+  'notFound.subtitle': { sv: 'Det verkar som att du tog en fel sväng.', en: 'Looks like you took a wrong turn.' },
+  'notFound.body': {
+    sv: 'Vi kunde inte hitta sidan du letade efter. Välj en väg vidare nedan.',
+    en: 'We could not find the page you were looking for. Pick a way forward below.'
   },
-  'landing.feature2Title': { sv: 'Uppföljning', en: 'Follow-ups' },
-  'landing.feature2Body': {
-    sv: 'Ställ in smarta datum för att höra av dig.',
-    en: 'Set smart dates to check in.'
+  'notFound.ctaHome': { sv: 'Till startsidan', en: 'Go to home' },
+  'notFound.ctaJobs': { sv: 'Till jobb', en: 'Go to jobs' },
+  'landing.featuresTitle': { sv: 'Funktioner', en: 'Features' },
+  'landing.featuresSubtitle': {
+    sv: 'Utvalda funktioner som håller processen tydlig.',
+    en: 'Selected features that keep the process clear.'
   },
-  'landing.feature3Title': { sv: 'Påminnelser', en: 'Reminders' },
-  'landing.feature3Body': {
-    sv: 'Få e-postpåminnelser när det är dags.',
-    en: 'Get email reminders when it is time.'
+  'landing.stepsTitle': { sv: 'Så funkar det', en: 'How it works' },
+  'landing.stepsSubtitle': {
+    sv: 'Tre steg för att få ordning på processen.',
+    en: 'Three steps to get your process in order.'
   },
-  'landing.feature4Title': { sv: 'Mobil först', en: 'Mobile first' },
-  'landing.feature4Body': {
-    sv: 'Byggd för att användas på språng.',
-    en: 'Built to be used on the go.'
-  }
+  'landing.step1Title': { sv: 'Lägg till jobb', en: 'Add a job' },
+  'landing.step1Body': {
+    sv: 'Spara titel, företag och datum för ansökan.',
+    en: 'Save title, company, and applied date.'
+  },
+  'landing.step2Title': { sv: 'Välj uppföljning', en: 'Pick a follow-up' },
+  'landing.step2Body': {
+    sv: 'Välj ett intervall eller ett datum som passar.',
+    en: 'Choose an interval or a date that fits.'
+  },
+  'landing.step3Title': { sv: 'Följ status', en: 'Track status' },
+  'landing.step3Body': {
+    sv: 'Se vad som är klart och vad som väntar.',
+    en: 'See what is done and what is next.'
+  },
+  'landing.ctaTitle': { sv: 'Redo att ta kontroll?', en: 'Ready to take control?' },
+  'landing.ctaBody': {
+    sv: 'Skapa konto och få en tydlig överblick över alla dina ansökningar.',
+    en: 'Create an account and get a clear overview of all your applications.'
+  },
+  'landing.ctaPrimary': { sv: 'Skapa konto', en: 'Create account' },
+  'landing.ctaSecondary': { sv: 'Logga in', en: 'Log in' },
+  'landing.feature01Title': { sv: 'Översikt', en: 'Overview' },
+  'landing.feature01Body': {
+    sv: 'Samla alla ansökningar i en vy.',
+    en: 'Keep every application in one view.'
+  },
+  'landing.feature02Title': { sv: 'Uppföljning', en: 'Follow-ups' },
+  'landing.feature02Body': {
+    sv: 'Automatiska uppföljningsdatum.',
+    en: 'Automatic follow-up dates.'
+  },
+  'landing.feature03Title': { sv: 'Påminnelser', en: 'Reminders' },
+  'landing.feature03Body': {
+    sv: 'Påminnelser när det är dags.',
+    en: 'Reminders right when it is time.'
+  },
+  'landing.feature04Title': { sv: 'Mobil först', en: 'Mobile first' },
+  'landing.feature04Body': {
+    sv: 'Fungerar lika bra i mobilen.',
+    en: 'Works great on mobile.'
+  },
+  'landing.feature05Title': { sv: 'Statuschip', en: 'Status chips' },
+  'landing.feature05Body': {
+    sv: 'Färgkodad status per jobb.',
+    en: 'Color-coded status per job.'
+  },
+  'landing.feature06Title': { sv: 'Snabb sök', en: 'Quick search' },
+  'landing.feature06Body': {
+    sv: 'Filtrera på titel eller företag.',
+    en: 'Filter by title or company.'
+  },
+  'landing.feature07Title': { sv: 'Anteckningar', en: 'Notes' },
+  'landing.feature07Body': {
+    sv: 'Spara intervjupunkter och feedback.',
+    en: 'Save interview notes and feedback.'
+  },
+  'landing.feature08Title': { sv: 'Länkar', en: 'Links' },
+  'landing.feature08Body': {
+    sv: 'Jobblänkar ett klick bort.',
+    en: 'Job links one click away.'
+  },
 };
 
 @Injectable({ providedIn: 'root' })
@@ -239,3 +309,4 @@ export class I18nService {
     });
   }
 }
+
