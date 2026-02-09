@@ -116,6 +116,16 @@ export class JobCard {
     return tone ? `job-card__countdown--${tone}` : '';
   }
 
+  protected get isDueSoon(): boolean {
+    const target = this.parseDate(this.job?.follow_up_on);
+    if (!target) {
+      return false;
+    }
+
+    const days = this.diffInDays(target, new Date());
+    return days >= 0 && days <= 2;
+  }
+
   private interpolateDays(key: string, days: number): string {
     return this.i18n.translate(key).replace('{days}', `${days}`);
   }
