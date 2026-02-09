@@ -17,6 +17,7 @@ import { I18nService } from '../../../core/i18n/i18n.service';
 import { JobsService } from '../../../core/services/jobs.service';
 import { TranslatePipe } from '../../../shared/pipes/translate.pipe';
 import { DeleteJobDialog } from '../jobs-list/delete-job-dialog/delete-job-dialog';
+import { calculateFollowUpDate, FollowUpPreset } from './follow-up-calculator';
 
 type JobStatus = 'Applied' | 'Interview' | 'Offer' | 'Rejected';
 
@@ -54,8 +55,7 @@ export class JobForm {
       nonNullable: true,
       validators: [Validators.maxLength(500)]
     }),
-    follow_up_preset: new FormControl('', { nonNullable: true }),
-    follow_up_on: new FormControl<Date | null>(null)
+    follow_up_preset: new FormControl<FollowUpPreset | null>(null)
   });
 
   protected isLoading = false;
@@ -68,8 +68,8 @@ export class JobForm {
     { value: 'Offer', labelKey: 'jobs.status.offer' },
     { value: 'Rejected', labelKey: 'jobs.status.rejected' }
   ];
-  protected readonly followUpPresets: { value: string; labelKey: string }[] = [
-    { value: '', labelKey: 'jobForm.followUpNone' },
+  protected readonly followUpPresets: { value: FollowUpPreset | null; labelKey: string }[] = [
+    { value: null, labelKey: 'jobForm.followUpNone' },
     { value: '5bd', labelKey: 'jobForm.followUp5bd' },
     { value: '1w', labelKey: 'jobForm.followUp1w' },
     { value: '2w', labelKey: 'jobForm.followUp2w' }
@@ -99,7 +99,7 @@ export class JobForm {
 
     const appliedOn = this.form.controls.applied_on.value;
     const followUpPreset = this.form.controls.follow_up_preset.value;
-    const followUpOn = this.form.controls.follow_up_on.value;
+    const followUpOn = calculateFollowUpDate(appliedOn, followUpPreset);
     const payload = {
       title: this.form.controls.title.value.trim(),
       company: this.form.controls.company.value.trim(),
@@ -108,7 +108,7 @@ export class JobForm {
       status: this.form.controls.status.value,
       notes: this.form.controls.notes.value.trim() || null,
       job_url: this.form.controls.job_url.value.trim() || null,
-      follow_up_preset: followUpPreset || null,
+      follow_up_preset: followUpPreset,
       follow_up_on: followUpOn ? this.toDateString(followUpOn) : null
     };
 
@@ -174,6 +174,13 @@ export class JobForm {
     return this.i18n.translate(this.isEdit ? 'jobForm.editSubtitle' : 'jobForm.createSubtitle');
   }
 
+  protected get computedFollowUpOn(): Date | null {
+    return calculateFollowUpDate(
+      this.form.controls.applied_on.value,
+      this.form.controls.follow_up_preset.value
+    );
+  }
+
   private async loadJob(jobId: string): Promise<void> {
     this.isLoading = true;
     const { data, error } = await this.jobsService.getJobById(jobId);
@@ -197,8 +204,7 @@ export class JobForm {
       status: data.status as JobStatus,
       notes: data.notes ?? '',
       job_url: data.job_url ?? '',
-      follow_up_preset: data.follow_up_preset ?? '',
-      follow_up_on: data.follow_up_on ? new Date(data.follow_up_on) : null
+      follow_up_preset: (data.follow_up_preset as FollowUpPreset | null) ?? null
     });
   }
 

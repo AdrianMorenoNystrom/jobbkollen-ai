@@ -66,6 +66,11 @@
     </div>
 
     <mat-chip-set>
+      @if (isDueSoon) {
+        <mat-chip class="job-card__due-chip">
+          {{ 'jobs.followUpDueSoon' | t }}
+        </mat-chip>
+      }
       <mat-chip class="job-card__status-chip" [ngClass]="statusClass(job.status)">
         {{ statusLabel(job.status) }}
       </mat-chip>

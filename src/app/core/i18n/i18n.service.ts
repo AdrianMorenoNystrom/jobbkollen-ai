@@ -28,6 +28,7 @@ const TRANSLATIONS: TranslationMap = {
   'jobs.followUpToday': { sv: 'Idag', en: 'Today' },
   'jobs.followUpInDays': { sv: 'om {days} dagar', en: 'in {days} days' },
   'jobs.followUpOverdue': { sv: '{days} dagar försenad', en: '{days} days overdue' },
+  'jobs.followUpDueSoon': { sv: 'Snart dags', en: 'Due soon' },
   'jobs.jobUrlLabel': { sv: 'Jobbannons', en: 'Job posting' },
   'jobs.jobUrlEmpty': { sv: 'Ingen länk angiven', en: 'No link provided' },
   'jobs.notes.label': { sv: 'Anteckningar', en: 'Notes' },
@@ -89,6 +90,11 @@ const TRANSLATIONS: TranslationMap = {
   'jobForm.followUp2w': { sv: '2 veckor', en: '2 weeks' },
   'jobForm.followUpOnLabel': { sv: 'Uppföljningsdatum', en: 'Follow-up date' },
   'jobForm.followUpOnHint': { sv: 'Valfritt datum för uppföljning.', en: 'Optional follow-up date.' },
+  'jobForm.followUpCalculatedEmpty': { sv: 'Ingen uppföljning', en: 'No follow-up' },
+  'jobForm.followUpCalculatedHint': {
+    sv: 'Beräknas automatiskt utifrån ansökningsdatum och val.',
+    en: 'Calculated automatically from the applied date and selection.'
+  },
   'jobForm.requiredError': { sv: 'Fältet är obligatoriskt.', en: 'This field is required.' },
   'jobForm.saveError': { sv: 'Kunde inte spara jobbet.', en: 'Could not save job.' },
   'jobForm.saved': { sv: 'Jobbet sparades.', en: 'Job saved.' },

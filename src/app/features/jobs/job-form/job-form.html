@@ -77,13 +77,6 @@
           <mat-hint>{{ 'jobForm.followUpPresetHint' | t }}</mat-hint>
         </mat-form-field>
 
-        <mat-form-field appearance="outline">
-          <mat-label>{{ 'jobForm.followUpOnLabel' | t }}</mat-label>
-          <input matInput [matDatepicker]="followUpPicker" formControlName="follow_up_on" />
-          <mat-datepicker-toggle matSuffix [for]="followUpPicker"></mat-datepicker-toggle>
-          <mat-datepicker #followUpPicker></mat-datepicker>
-          <mat-hint>{{ 'jobForm.followUpOnHint' | t }}</mat-hint>
-        </mat-form-field>
       </form>
 
       <div class="job-form__status" aria-live="polite">
