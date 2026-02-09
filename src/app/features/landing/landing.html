@@ -1,73 +1,86 @@
-<div class="landing">
-  <mat-toolbar class="landing__toolbar">
-    <div class="landing__brand">
-      <mat-icon aria-hidden="true">work</mat-icon>
-      <span>JobbKollen</span>
-    </div>
-    <span class="landing__spacer"></span>
-    <app-language-toggle />
-    <div class="landing__toolbar-actions">
-      <a mat-button routerLink="/auth">{{ 'landing.ctaLogin' | t }}</a>
-      <a mat-flat-button color="primary" routerLink="/auth">
-        {{ 'landing.ctaSignup' | t }}
-      </a>
-    </div>
-  </mat-toolbar>
-
-  <section class="landing__hero">
-    <div class="landing__hero-copy">
-      <h1>{{ 'landing.heroTitle' | t }}</h1>
-      <p>{{ 'landing.heroBody' | t }}</p>
-      <div class="landing__cta">
+﻿<div class="landing">
+  <header class="landing__hero">
+    <nav class="landing__nav landing__container">
+      <div class="landing__brand">
+        <mat-icon aria-hidden="true">work</mat-icon>
+        <span>{{ 'app.name' | t }}</span>
+      </div>
+      <div class="landing__nav-actions">
+        <app-language-toggle />
+        <a mat-button routerLink="/auth">{{ 'landing.ctaLogin' | t }}</a>
         <a mat-flat-button color="primary" routerLink="/auth">
           {{ 'landing.ctaSignup' | t }}
         </a>
+      </div>
+    </nav>
+
+    <div class="landing__hero-grid landing__container">
+      <div class="landing__hero-copy">
+        <span class="landing__pill">{{ 'landing.kicker' | t }}</span>
+        <h1>{{ 'landing.heroTitle' | t }}</h1>
+        <p>{{ 'landing.heroBody' | t }}</p>
+        <div class="landing__cta">
+          <a mat-flat-button color="primary" routerLink="/auth">
+            {{ 'landing.ctaSignup' | t }}
+          </a>
+          <a mat-stroked-button color="primary" routerLink="/auth">
+            {{ 'landing.ctaLogin' | t }}
+          </a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <section class="landing__features landing__container">
+    <div class="landing__section-head">
+      <h2>{{ 'landing.featuresTitle' | t }}</h2>
+      <p>{{ 'landing.featuresSubtitle' | t }}</p>
+    </div>
+    <div class="landing__features-grid">
+      @for (feature of features; track feature.title) {
+        <article class="landing__feature-card">
+          <mat-icon aria-hidden="true">{{ feature.icon }}</mat-icon>
+          <div>
+            <h3>{{ feature.title | t }}</h3>
+            <p>{{ feature.body | t }}</p>
+          </div>
+        </article>
+      }
+    </div>
+  </section>
+
+  <section class="landing__steps landing__container">
+    <div class="landing__section-head">
+      <h2>{{ 'landing.stepsTitle' | t }}</h2>
+      <p>{{ 'landing.stepsSubtitle' | t }}</p>
+    </div>
+    <div class="landing__steps-grid">
+      @for (step of steps; track step.title) {
+        <div class="landing__step-card">
+          <div class="landing__step-number">{{ $index + 1 }}</div>
+          <div>
+            <h3>{{ step.title | t }}</h3>
+            <p>{{ step.body | t }}</p>
+          </div>
+        </div>
+      }
+    </div>
+  </section>
+
+  <section class="landing__cta-band landing__container">
+    <div class="landing__cta-band-inner">
+      <div>
+        <h2>{{ 'landing.ctaTitle' | t }}</h2>
+        <p>{{ 'landing.ctaBody' | t }}</p>
+      </div>
+      <div class="landing__cta">
         <a mat-stroked-button color="primary" routerLink="/auth">
-          {{ 'landing.ctaLogin' | t }}
+          {{ 'landing.ctaSecondary' | t }}
+        </a>
+        <a mat-flat-button color="primary" routerLink="/auth">
+          {{ 'landing.ctaPrimary' | t }}
         </a>
       </div>
     </div>
-    <mat-card class="landing__hero-card">
-      <mat-card-header>
-        <mat-card-title>JobbKollen</mat-card-title>
-        <mat-card-subtitle>2026</mat-card-subtitle>
-      </mat-card-header>
-      <mat-card-content>
-        <div class="landing__preview">
-          <mat-card class="landing__preview-card">
-            <mat-card-header>
-              <mat-card-title>Product Designer</mat-card-title>
-              <mat-card-subtitle>Acme AB · Stockholm</mat-card-subtitle>
-            </mat-card-header>
-          </mat-card>
-          <mat-card class="landing__preview-card">
-            <mat-card-header>
-              <mat-card-title>Frontend Engineer</mat-card-title>
-              <mat-card-subtitle>Northwind · Remote</mat-card-subtitle>
-            </mat-card-header>
-          </mat-card>
-          <mat-card class="landing__preview-card">
-            <mat-card-header>
-              <mat-card-title>UX Researcher</mat-card-title>
-              <mat-card-subtitle>Bright Labs · Göteborg</mat-card-subtitle>
-            </mat-card-header>
-          </mat-card>
-        </div>
-      </mat-card-content>
-    </mat-card>
-  </section>
-
-  <section class="landing__features">
-    @for (feature of features; track feature.title) {
-      <mat-card class="landing__feature-card">
-        <mat-card-header>
-          <mat-icon mat-card-avatar aria-hidden="true">{{ feature.icon }}</mat-icon>
-          <mat-card-title>{{ feature.title | t }}</mat-card-title>
-        </mat-card-header>
-        <mat-card-content>
-          <p>{{ feature.body | t }}</p>
-        </mat-card-content>
-      </mat-card>
-    }
   </section>
 </div>

@@ -11,7 +11,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { from, of } from 'rxjs';
-import { map, shareReplay, switchMap } from 'rxjs/operators';
+import { map, shareReplay, switchMap, tap } from 'rxjs/operators';
 import { LanguageToggle } from '../../../shared/components/language-toggle/language-toggle';
 import { TranslatePipe } from '../../../shared/pipes/translate.pipe';
 import { Avatar } from '../../../shared/components/avatar/avatar';
@@ -51,7 +51,6 @@ export class AppShell {
 
   protected readonly navItems = [
     { label: 'nav.jobs', icon: 'work', link: '/app/jobs' },
-    { label: 'nav.newJob', icon: 'add_circle', link: '/app/jobs/new' },
     { label: 'nav.settings', icon: 'settings', link: '/app/settings' }
   ];
 
@@ -66,6 +65,11 @@ export class AppShell {
 
   protected readonly profile$ = this.authService.authState$.pipe(
     switchMap((session) => (session ? from(this.profileService.getMyProfile()) : of(null))),
+    tap((profile) => {
+      if (profile?.preferred_language && this.i18n.language() !== profile.preferred_language) {
+        this.i18n.setLanguage(profile.preferred_language);
+      }
+    }),
     shareReplay({ bufferSize: 1, refCount: true })
   );
 

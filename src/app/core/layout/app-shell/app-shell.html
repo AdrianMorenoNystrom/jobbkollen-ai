@@ -7,7 +7,7 @@
   >
     <div class="shell__brand">
       <mat-icon aria-hidden="true">work</mat-icon>
-      <span class="shell__brand-text">JobbKollen</span>
+      <span class="shell__brand-text">{{ 'app.name' | t }}</span>
     </div>
     <mat-nav-list>
       @for (item of navItems; track item.link) {
@@ -36,7 +36,7 @@
           <mat-icon>menu</mat-icon>
         </button>
       }
-      <span class="shell__title">JobbKollen</span>
+      <span class="shell__title">{{ 'app.name' | t }}</span>
       <span class="shell__spacer"></span>
       <app-language-toggle />
       @if (profile$ | async; as profile) {
