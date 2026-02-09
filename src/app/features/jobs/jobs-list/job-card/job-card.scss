@@ -1,0 +1,180 @@
+:host {
+  display: block;
+  height: 100%;
+}
+
+.job-card {
+  height: var(--job-card-height, 400px);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.job-card mat-card-content {
+  display: grid;
+  gap: 12px;
+  flex: 1;
+  min-height: 0;
+}
+
+.job-card mat-card-actions {
+  margin-top: auto;
+}
+
+.job-card mat-card-title {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.job-card mat-card-subtitle {
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.job-card__divider {
+  margin: 0 6px;
+  color: rgba(0, 0, 0, 0.54);
+}
+
+.job-card__meta {
+  display: grid;
+  gap: 8px;
+}
+
+.job-card__meta-item {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: baseline;
+}
+
+.job-card__meta-value {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: baseline;
+}
+
+.job-card__label {
+  font-weight: 600;
+}
+
+.job-card__countdown {
+  font-size: 12px;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 999px;
+}
+
+.job-card__countdown--upcoming {
+  background: #e0f2fe;
+  color: #0c4a6e;
+}
+
+.job-card__countdown--today {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+.job-card__countdown--overdue {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+.job-card__detail {
+  display: grid;
+  gap: 6px;
+}
+
+.job-card__link {
+  display: inline-flex;
+  gap: 6px;
+  align-items: center;
+  min-width: 0;
+  word-break: break-word;
+}
+
+@media (max-width: 1360px) {
+  .link_icon {
+    width: 3rem;
+  }
+}
+
+.job-card__link a {
+  color: #1d4ed8;
+  text-decoration: none;
+  word-break: break-all;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  min-width: 0;
+  flex: 1;
+}
+
+.job-card__link a:hover {
+  text-decoration: underline;
+}
+
+.job-card__link--empty {
+  color: rgba(0, 0, 0, 0.54);
+}
+
+.job-card__notes {
+  display: grid;
+  gap: 8px;
+}
+
+.job-card__notes-preview {
+  margin: 0;
+  color: rgba(0, 0, 0, 0.72);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  word-break: break-word;
+}
+
+.job-card__notes-button {
+  width: fit-content;
+}
+
+.job-card__notes-empty {
+  display: inline-flex;
+  gap: 6px;
+  align-items: center;
+  color: rgba(0, 0, 0, 0.54);
+  font-size: 13px;
+}
+
+.job-card__status-chip {
+  text-transform: capitalize;
+}
+
+.job-card__status-chip--applied {
+  background: #e0f2fe;
+  color: #0c4a6e;
+}
+
+.job-card__status-chip--interview {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+.job-card__status-chip--offer {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.job-card__status-chip--rejected {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+.job-card__status-chip--withdrawn {
+  background: #e2e8f0;
+  color: #334155;
+}

@@ -1,0 +1,95 @@
+﻿<mat-card class="job-card">
+  <mat-card-header>
+    <mat-card-title>{{ job.title }}</mat-card-title>
+    <mat-card-subtitle>
+      {{ job.company }}
+      <span class="job-card__divider">&#183;</span>
+      {{ job.location || ('jobs.locationUnknown' | t) }}
+    </mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content>
+    <div class="job-card__meta">
+      <div class="job-card__meta-item">
+        <span class="job-card__label">{{ 'jobs.appliedOn' | t }}</span>
+        <span>
+          @if (job.applied_on) {
+            {{ job.applied_on | date: 'mediumDate' }}
+          } @else {
+            {{ 'jobs.appliedOnUnknown' | t }}
+          }
+        </span>
+      </div>
+      @if (followUpLabel) {
+        <div class="job-card__meta-item">
+          <span class="job-card__label">{{ 'jobs.followUpOn' | t }}</span>
+          <span class="job-card__meta-value">
+            {{ job.follow_up_on | date: 'mediumDate' }}
+            <span class="job-card__countdown" [ngClass]="followUpClass">
+              {{ followUpLabel }}
+            </span>
+          </span>
+        </div>
+      }
+    </div>
+
+    <div class="job-card__detail">
+      <span class="job-card__label">{{ 'jobs.jobUrlLabel' | t }}</span>
+      @if (job.job_url) {
+        <span class="job-card__link">
+          <mat-icon class="link_icon" aria-hidden="true">link</mat-icon>
+          <a [href]="job.job_url" target="_blank" rel="noopener">
+            {{ job.job_url }}
+          </a>
+        </span>
+      } @else {
+        <span class="job-card__link job-card__link--empty">
+          <mat-icon aria-hidden="true">link_off</mat-icon>
+          {{ 'jobs.jobUrlEmpty' | t }}
+        </span>
+      }
+    </div>
+
+    <div class="job-card__notes">
+      <span class="job-card__label">{{ 'jobs.notes.label' | t }}</span>
+      @if (hasNotes) {
+        <p class="job-card__notes-preview">{{ job.notes }}</p>
+      } @else {
+        <div class="job-card__notes-empty">
+          <mat-icon aria-hidden="true">sticky_note_2</mat-icon>
+          <span>{{ 'jobs.notes.empty' | t }}</span>
+        </div>
+      }
+      <button mat-stroked-button type="button" class="job-card__notes-button" (click)="openNotes()">
+        <mat-icon aria-hidden="true">sticky_note_2</mat-icon>
+        {{ notesActionLabel }}
+      </button>
+    </div>
+
+    <mat-chip-set>
+      <mat-chip class="job-card__status-chip" [ngClass]="statusClass(job.status)">
+        {{ statusLabel(job.status) }}
+      </mat-chip>
+    </mat-chip-set>
+  </mat-card-content>
+  <mat-card-actions align="end">
+    <a
+      mat-button
+      color="primary"
+      [routerLink]="['/app/jobs', job.id, 'edit']"
+      [attr.aria-label]="('jobs.editAria' | t) + ' ' + job.title"
+    >
+      <mat-icon aria-hidden="true">edit</mat-icon>
+      {{ 'common.edit' | t }}
+    </a>
+    <button
+      mat-icon-button
+      color="warn"
+      type="button"
+      (click)="requestDelete()"
+      [attr.aria-label]="('jobs.deleteAria' | t) + ' ' + job.title"
+    >
+      <mat-icon aria-hidden="true">delete</mat-icon>
+    </button>
+  </mat-card-actions>
+</mat-card>
+

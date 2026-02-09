@@ -1,9 +1,32 @@
 .job-form {
   display: grid;
   place-items: center;
+  min-height: calc(100vh - 80px);
   padding: 24px;
 }
 
 mat-card {
   width: min(720px, 100%);
+}
+
+.job-form__form {
+  display: grid;
+  gap: 16px;
+}
+
+.job-form__status {
+  margin-top: 16px;
+  min-height: 32px;
+  display: flex;
+  align-items: center;
+}
+
+.job-form__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+mat-form-field {
+  width: 100%;
 }
