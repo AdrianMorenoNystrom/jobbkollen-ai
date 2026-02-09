@@ -1,9 +1,7 @@
-import { DatePipe, NgClass } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
-import { MatChipsModule } from '@angular/material/chips';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
@@ -17,16 +15,14 @@ import { I18nService } from '../../../core/i18n/i18n.service';
 import { JobsService, Job } from '../../../core/services/jobs.service';
 import { TranslatePipe } from '../../../shared/pipes/translate.pipe';
 import { DeleteJobDialog } from './delete-job-dialog/delete-job-dialog';
+import { JobCard } from './job-card/job-card';
 
 @Component({
   selector: 'app-jobs-list',
   imports: [
-    DatePipe,
-    NgClass,
     ReactiveFormsModule,
     MatButtonModule,
     MatCardModule,
-    MatChipsModule,
     MatDialogModule,
     MatFormFieldModule,
     MatIconModule,
@@ -35,6 +31,7 @@ import { DeleteJobDialog } from './delete-job-dialog/delete-job-dialog';
     MatSelectModule,
     MatSnackBarModule,
     DeleteJobDialog,
+    JobCard,
     RouterLink,
     TranslatePipe
   ],
@@ -74,11 +71,6 @@ export class JobsList {
     const key = `jobs.status.${normalized}`;
     const label = this.i18n.translate(key);
     return label === key ? status : label;
-  }
-
-  protected statusClass(status: string): string {
-    const normalized = status.toLowerCase().replace(/\s+/g, '-');
-    return `jobs-list__status-chip--${normalized}`;
   }
 
   protected async confirmDelete(job: Job): Promise<void> {

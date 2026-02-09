@@ -1,4 +1,4 @@
-<div class="jobs-list">
+﻿<div class="jobs-list">
   <div class="jobs-list__header">
     <div>
       <h2>{{ 'nav.jobs' | t }}</h2>
@@ -71,52 +71,9 @@
   } @else {
     <div class="jobs-list__grid">
       @for (job of filteredJobs; track job.id) {
-        <mat-card class="jobs-list__card">
-          <mat-card-header>
-            <mat-card-title>{{ job.title }}</mat-card-title>
-            <mat-card-subtitle>
-              {{ job.company }} · {{ job.location || ('jobs.locationUnknown' | t) }}
-            </mat-card-subtitle>
-          </mat-card-header>
-          <mat-card-content>
-            <div class="jobs-list__meta">
-              <span class="jobs-list__label">{{ 'jobs.appliedOn' | t }}</span>
-              <span>
-                @if (job.applied_on) {
-                  {{ job.applied_on | date: 'mediumDate' }}
-                } @else {
-                  {{ 'jobs.appliedOnUnknown' | t }}
-                }
-              </span>
-            </div>
-            <mat-chip-set>
-              <mat-chip class="jobs-list__status-chip" [ngClass]="statusClass(job.status)">
-                {{ statusLabel(job.status) }}
-              </mat-chip>
-            </mat-chip-set>
-          </mat-card-content>
-          <mat-card-actions align="end">
-            <a
-              mat-button
-              color="primary"
-              [routerLink]="['/app/jobs', job.id, 'edit']"
-              [attr.aria-label]="('jobs.editAria' | t) + ' ' + job.title"
-            >
-              <mat-icon aria-hidden="true">edit</mat-icon>
-              {{ 'common.edit' | t }}
-            </a>
-            <button
-              mat-icon-button
-              color="warn"
-              type="button"
-              (click)="confirmDelete(job)"
-              [attr.aria-label]="('jobs.deleteAria' | t) + ' ' + job.title"
-            >
-              <mat-icon aria-hidden="true">delete</mat-icon>
-            </button>
-          </mat-card-actions>
-        </mat-card>
+        <app-job-card [job]="job" (deleteJob)="confirmDelete($event)"></app-job-card>
       }
     </div>
   }
 </div>
+

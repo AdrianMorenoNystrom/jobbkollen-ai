@@ -19,6 +19,18 @@ export interface Job {
   updated_at?: string;
 }
 
+export interface JobInput {
+  title: string;
+  company: string;
+  location: string;
+  applied_on: string | null;
+  status: string;
+  notes: string | null;
+  job_url?: string | null;
+  follow_up_preset?: string | null;
+  follow_up_on?: string | null;
+}
+
 @Injectable({ providedIn: 'root' })
 export class JobsService {
   private readonly supabase = inject(SupabaseService);
@@ -67,6 +79,47 @@ export class JobsService {
     const { error } = await this.supabase.client
       .from('job_applications')
       .delete()
+      .eq('id', id)
+      .eq('user_id', userId);
+    return { error: error ? { message: error.message } : null };
+  }
+
+  async createJob(payload: JobInput): Promise<{ error: { message: string } | null }> {
+    const session = await this.auth.getSession();
+    const userId = session?.user.id;
+    if (!userId) {
+      return { error: { message: 'Not authenticated' } };
+    }
+
+    const { error } = await this.supabase.client.from('job_applications').insert(payload);
+    return { error: error ? { message: error.message } : null };
+  }
+
+  async updateJob(id: string, payload: JobInput): Promise<{ error: { message: string } | null }> {
+    const session = await this.auth.getSession();
+    const userId = session?.user.id;
+    if (!userId) {
+      return { error: { message: 'Not authenticated' } };
+    }
+
+    const { error } = await this.supabase.client
+      .from('job_applications')
+      .update(payload)
+      .eq('id', id)
+      .eq('user_id', userId);
+    return { error: error ? { message: error.message } : null };
+  }
+
+  async updateJobNotes(id: string, notes: string | null): Promise<{ error: { message: string } | null }> {
+    const session = await this.auth.getSession();
+    const userId = session?.user.id;
+    if (!userId) {
+      return { error: { message: 'Not authenticated' } };
+    }
+
+    const { error } = await this.supabase.client
+      .from('job_applications')
+      .update({ notes })
       .eq('id', id)
       .eq('user_id', userId);
     return { error: error ? { message: error.message } : null };
