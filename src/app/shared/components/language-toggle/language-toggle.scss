@@ -1,5 +1,7 @@
 .language-toggle {
-  height: 36px;
+  height: 36px; 
+  display: flex;
+  align-items: center;
 }
 
 mat-button-toggle {

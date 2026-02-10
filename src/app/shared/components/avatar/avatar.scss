@@ -1,11 +1,13 @@
 .avatar {
-  display: grid;
-  place-items: center;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   width: 36px;
   height: 36px;
   border-radius: 50%;
   font-weight: 600;
-  font-size: 0.9rem;
+  line-height: 1;
+  text-align: center;
   background: #cbd5f5;
   text-transform: uppercase;
 }

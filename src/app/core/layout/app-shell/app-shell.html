@@ -6,7 +6,9 @@
     [opened]="!(isHandset$ | async)"
   >
     <div class="shell__brand">
-      <mat-icon aria-hidden="true">work</mat-icon>
+      <span class="shell__brand-icon" aria-hidden="true">
+        <mat-icon>work</mat-icon>
+      </span>
       <span class="shell__brand-text">{{ 'app.name' | t }}</span>
     </div>
     <mat-nav-list>
@@ -25,56 +27,70 @@
   </mat-sidenav>
 
   <mat-sidenav-content>
-    <mat-toolbar color="primary" class="shell__toolbar">
-      @if (isHandset$ | async) {
-        <button
-          mat-icon-button
-          type="button"
-          (click)="drawer.toggle()"
-          [attr.aria-label]="'aria.openNavigation' | t"
-        >
-          <mat-icon>menu</mat-icon>
-        </button>
-      }
-      <span class="shell__title">{{ 'app.name' | t }}</span>
+    <mat-toolbar class="shell__toolbar">
+      <div class="shell__toolbar-left">
+        @if (isHandset$ | async) {
+          <button
+            mat-icon-button
+            type="button"
+            (click)="drawer.toggle()"
+            [attr.aria-label]="'aria.openNavigation' | t"
+          >
+            <mat-icon>menu</mat-icon>
+          </button>
+        }
+        <span class="shell__title">{{ 'app.name' | t }}</span>
+      </div>
+
       <span class="shell__spacer"></span>
-      <app-language-toggle />
-      @if (profile$ | async; as profile) {
-        <button
-          mat-button
-          type="button"
-          class="shell__user-button"
-          [matMenuTriggerFor]="userMenu"
-          [attr.aria-label]="'aria.openUserMenu' | t"
+
+      <div class="shell__toolbar-actions">
+        <a
+          mat-stroked-button
+          color="primary"
+          routerLink="/app/jobs/new"
+          class="shell__cta"
+          [attr.aria-label]="'nav.newJob' | t"
         >
-          <app-avatar [name]="profile.first_name" [color]="profile.avatar_color"></app-avatar>
-          <span class="shell__user-name">{{ profile.first_name }}</span>
-          <mat-icon>expand_more</mat-icon>
-        </button>
-      } @else {
-        <button
-          mat-icon-button
-          type="button"
-          class="shell__user-button"
-          [matMenuTriggerFor]="userMenu"
-          [attr.aria-label]="'aria.openUserMenu' | t"
-        >
-          <mat-icon>account_circle</mat-icon>
-        </button>
-      }
+          <mat-icon aria-hidden="true">add</mat-icon>
+        </a>
+
+        @if (profile$ | async; as profile) {
+          <button
+            mat-button
+            type="button"
+            class="shell__user-button"
+            [matMenuTriggerFor]="userMenu"
+            [attr.aria-label]="'aria.openUserMenu' | t"
+          >
+            <span class="shell__user-name">{{ profile.first_name }}</span>
+            <mat-icon>expand_more</mat-icon>
+                        <app-avatar [name]="profile.first_name" [color]="profile.avatar_color"></app-avatar>
+
+          </button>
+        } @else {
+          <button
+            mat-icon-button
+            type="button"
+            class="shell__user-button"
+            [matMenuTriggerFor]="userMenu"
+            [attr.aria-label]="'aria.openUserMenu' | t"
+          >
+            <mat-icon>account_circle</mat-icon>
+          </button>
+        }
+      </div>
     </mat-toolbar>
 
     <main class="shell__content">
-      <router-outlet></router-outlet>
+      <div class="shell__content-inner">
+        <router-outlet></router-outlet>
+      </div>
     </main>
   </mat-sidenav-content>
 </mat-sidenav-container>
 
 <mat-menu #userMenu="matMenu">
-  <button mat-menu-item routerLink="/app/jobs">
-    <mat-icon aria-hidden="true">work</mat-icon>
-    <span>{{ 'nav.jobs' | t }}</span>
-  </button>
   <button mat-menu-item routerLink="/app/settings">
     <mat-icon aria-hidden="true">settings</mat-icon>
     <span>{{ 'nav.settings' | t }}</span>

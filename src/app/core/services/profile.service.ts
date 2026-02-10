@@ -1,4 +1,5 @@
 import { Injectable, inject } from '@angular/core';
+import { Subject } from 'rxjs';
 import { SupabaseService } from '../supabase/supabase.service';
 import { AuthService } from './auth.service';
 
@@ -18,6 +19,7 @@ export class ProfileService {
   private readonly supabase = inject(SupabaseService);
   private readonly auth = inject(AuthService);
   private readonly client = this.supabase.client;
+  readonly profileUpdated$ = new Subject<void>();
 
   async getMyProfile(): Promise<Profile | null> {
     const session = await this.auth.getSession();
@@ -46,7 +48,11 @@ export class ProfileService {
       throw new Error('Not authenticated');
     }
 
-    return this.client.from('profiles').upsert({ id: userId, ...profile });
+    const result = await this.client.from('profiles').upsert({ id: userId, ...profile });
+    if (!result.error) {
+      this.profileUpdated$.next();
+    }
+    return result;
   }
 
   async updateMyProfile(profile: Partial<Profile>) {
@@ -56,6 +62,10 @@ export class ProfileService {
       throw new Error('Not authenticated');
     }
 
-    return this.client.from('profiles').update(profile).eq('id', userId);
+    const result = await this.client.from('profiles').update(profile).eq('id', userId);
+    if (!result.error) {
+      this.profileUpdated$.next();
+    }
+    return result;
   }
 }
