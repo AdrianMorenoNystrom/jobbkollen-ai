@@ -1,29 +1,56 @@
-.settings {
-  display: grid;
-  place-items: center;
-  min-height: calc(100vh - 80px);
-  padding: 24px;
+.settings-page {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-16);
+  color: var(--text);
 }
 
-mat-card {
-  width: min(720px, 100%);
+.settings__actions {
+  display: flex;
+  gap: var(--space-8);
+  flex-wrap: wrap;
 }
 
-.settings__form {
+.settings__button {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.settings__spinner {
+  flex: 0 0 auto;
+}
+
+.settings__grid {
   display: grid;
-  gap: 20px;
+  gap: var(--space-16);
+  grid-template-columns: 1fr;
+}
+
+.settings__section {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-12);
+  box-shadow: none;
+  background: var(--surface);
+  color: var(--text);
+}
+
+.settings__section-content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-12);
 }
 
 .settings__palette {
   display: grid;
-  gap: 12px;
+  gap: var(--space-12);
 }
 
 .settings__palette-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 16px;
+  gap: var(--space-12);
   flex-wrap: wrap;
 }
 
@@ -33,18 +60,85 @@ mat-card {
 
 .settings__palette-header p {
   margin: 0;
-  color: rgba(0, 0, 0, 0.6);
+  color: var(--muted-text);
 }
 
 .settings__palette-grid {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 8px;
+  grid-template-columns: repeat(auto-fit, minmax(52px, 1fr));
+  gap: 10px;
+  padding: 4px;
+  border: none;
+  background: transparent;
+  box-shadow: none;
+}
+
+.settings__palette-grid.mat-button-toggle-group {
+  border: none;
+  box-shadow: none;
+}
+
+.settings__palette-grid .mat-button-toggle {
+  width: 100%;
+  height: 100%;
+  border: none;
+  background: transparent;
+}
+
+.settings__palette-grid .mat-button-toggle-button,
+.settings__palette-grid .mat-button-toggle-label-content {
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+}
+
+.settings__palette-grid .mat-button-toggle-checkbox-wrapper {
+  display: none;
+}
+
+.palette__option {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-width: 52px;
+  aspect-ratio: 1 / 1;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  background: var(--surface);
+  transition: none;
+  animation: none;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+.palette__option.mat-button-toggle-checked {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--primary) 35%, transparent);
+}
+
+.palette__avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+
+.palette__avatar .avatar {
+  width: 34px;
+  height: 34px;
+  font-size: 0.85rem;
+  margin-right: 0;
 }
 
 .settings__error {
   margin: 0;
-  color: #b00020;
+  color: var(--danger);
   font-size: 0.75rem;
 }
 
@@ -55,79 +149,40 @@ mat-card {
 
 .settings__hint {
   margin: 0;
-  color: rgba(0, 0, 0, 0.6);
+  color: var(--muted-text);
   font-size: 0.85rem;
 }
 
 .settings__status {
-  margin-top: 16px;
   min-height: 32px;
   display: flex;
   align-items: center;
 }
 
-.palette__option {
-  height: 48px;
+@media (min-width: 960px) {
+  .settings__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .settings__section--profile {
+    grid-column: 1 / -1;
+  }
 }
 
-.palette__dot {
-  display: block;
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  background: currentColor;
-}
-
-.palette__option--sunset {
-  color: #f97316;
-}
-
-.palette__option--coral {
-  color: #fb7185;
-}
-
-.palette__option--rose {
-  color: #f43f5e;
-}
-
-.palette__option--plum {
-  color: #a855f7;
-}
-
-.palette__option--indigo {
-  color: #6366f1;
-}
-
-.palette__option--sky {
-  color: #38bdf8;
-}
-
-.palette__option--teal {
-  color: #14b8a6;
-}
-
-.palette__option--emerald {
-  color: #22c55e;
-}
-
-.palette__option--lime {
-  color: #84cc16;
-}
-
-.palette__option--amber {
-  color: #f59e0b;
-}
-
-.palette__option--slate {
-  color: #64748b;
-}
-
-.palette__option--chocolate {
-  color: #b45309;
-}
-
-@media (min-width: 640px) {
+@media (max-width: 480px) {
   .settings__palette-grid {
-    grid-template-columns: repeat(6, minmax(0, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(48px, 1fr));
+    gap: 8px;
+  }
+
+  .palette__option {
+    min-width: 48px;
+  }
+
+  .palette__avatar .avatar {
+    width: 30px;
+    height: 30px;
+    font-size: 0.8rem;
+    margin-right: 0;
   }
 }

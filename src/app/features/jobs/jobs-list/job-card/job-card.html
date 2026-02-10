@@ -1,16 +1,24 @@
-﻿<mat-card class="job-card">
-  <mat-card-header>
-    <mat-card-title>{{ job.title }}</mat-card-title>
-    <mat-card-subtitle>
-      {{ job.company }}
-      <span class="job-card__divider">&#183;</span>
-      {{ job.location || ('jobs.locationUnknown' | t) }}
-    </mat-card-subtitle>
-  </mat-card-header>
+<mat-card class="job-card">
   <mat-card-content>
+    <div class="job-card__header">
+      <div class="job-card__title-group">
+        <h3 class="job-card__title">{{ job.title }}</h3>
+        <p class="job-card__company">{{ job.company }}</p>
+      </div>
+      <mat-chip-set class="job-card__status">
+        <mat-chip class="job-card__status-chip" [ngClass]="statusClass(job.status)">
+          {{ statusLabel(job.status) }}
+        </mat-chip>
+      </mat-chip-set>
+    </div>
+
     <div class="job-card__meta">
       <div class="job-card__meta-item">
-        <span class="job-card__label">{{ 'jobs.appliedOn' | t }}</span>
+        <mat-icon aria-hidden="true">place</mat-icon>
+        <span>{{ job.location || ('jobs.locationUnknown' | t) }}</span>
+      </div>
+      <div class="job-card__meta-item">
+        <mat-icon aria-hidden="true">event</mat-icon>
         <span>
           @if (job.applied_on) {
             {{ job.applied_on | date: 'mediumDate' }}
@@ -19,18 +27,15 @@
           }
         </span>
       </div>
-      @if (followUpLabel) {
-        <div class="job-card__meta-item">
-          <span class="job-card__label">{{ 'jobs.followUpOn' | t }}</span>
-          <span class="job-card__meta-value">
-            {{ job.follow_up_on | date: 'mediumDate' }}
-            <span class="job-card__countdown" [ngClass]="followUpClass">
-              {{ followUpLabel }}
-            </span>
-          </span>
-        </div>
-      }
     </div>
+
+    @if (followUpLabel) {
+      <div class="job-card__follow">
+        <span class="job-card__label">{{ 'jobs.followUpOn' | t }}</span>
+        <span class="job-card__follow-date">{{ job.follow_up_on | date: 'mediumDate' }}</span>
+        <span class="job-card__countdown" [ngClass]="followUpClass">{{ followUpLabel }}</span>
+      </div>
+    }
 
     <div class="job-card__detail">
       <span class="job-card__label">{{ 'jobs.jobUrlLabel' | t }}</span>
@@ -65,18 +70,15 @@
       </button>
     </div>
 
-    <mat-chip-set>
+    <mat-chip-set class="job-card__chips">
       @if (isDueSoon) {
         <mat-chip class="job-card__due-chip">
           {{ 'jobs.followUpDueSoon' | t }}
         </mat-chip>
       }
-      <mat-chip class="job-card__status-chip" [ngClass]="statusClass(job.status)">
-        {{ statusLabel(job.status) }}
-      </mat-chip>
     </mat-chip-set>
   </mat-card-content>
-  <mat-card-actions align="end">
+  <mat-card-actions align="end" class="job-card__actions">
     <a
       mat-button
       color="primary"
@@ -97,4 +99,3 @@
     </button>
   </mat-card-actions>
 </mat-card>
-

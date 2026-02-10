@@ -27,9 +27,7 @@
       </form>
 
       <div class="auth__status" aria-live="polite">
-        @if (isLoading) {
-          <mat-progress-spinner diameter="28" mode="indeterminate"></mat-progress-spinner>
-        } @else if (otpSent) {
+        @if (otpSent) {
           <p>{{ 'auth.codeHint' | t }}</p>
         } @else {
           <p>{{ 'auth.emailHint' | t }}</p>
@@ -45,20 +43,28 @@
           mat-flat-button
           color="primary"
           type="button"
+          class="auth__button"
           [disabled]="isLoading"
           (click)="sendOtp()"
         >
-          {{ 'auth.sendCode' | t }}
+          @if (isLoading) {
+            <mat-progress-spinner class="auth__spinner" diameter="16" mode="indeterminate"></mat-progress-spinner>
+          }
+          <span>{{ 'auth.sendCode' | t }}</span>
         </button>
       } @else {
         <button
           mat-flat-button
           color="primary"
           type="button"
+          class="auth__button"
           [disabled]="isLoading"
           (click)="verifyOtp()"
         >
-          {{ 'auth.verifyCode' | t }}
+          @if (isLoading) {
+            <mat-progress-spinner class="auth__spinner" diameter="16" mode="indeterminate"></mat-progress-spinner>
+          }
+          <span>{{ 'auth.verifyCode' | t }}</span>
         </button>
       }
     </mat-card-actions>

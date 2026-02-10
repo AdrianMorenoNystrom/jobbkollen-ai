@@ -1,17 +1,33 @@
 .shell {
   min-height: 100vh;
+  background: var(--app-bg);
+  color: var(--text);
 }
 
 .shell__sidenav {
   width: 240px;
+  background: var(--surface);
+  border-right: 1px solid var(--border);
+  color: var(--text);
 }
 
 .shell__brand {
   display: flex;
   align-items: center;
-  gap: 12px;
-  padding: 16px 20px 8px;
+  gap: var(--space-12);
+  padding: var(--space-24) var(--space-16) var(--space-12);
   font-weight: 600;
+}
+
+.shell__brand-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 10px;
+  background: color-mix(in srgb, var(--primary) 12%, transparent);
+  color: var(--primary);
 }
 
 .shell__brand-text {
@@ -21,7 +37,18 @@
 .shell__toolbar {
   position: sticky;
   top: 0;
-  z-index: 2;
+  z-index: 3;
+  background: var(--surface);
+  color: var(--text);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  gap: var(--space-12);
+}
+
+.shell__toolbar-left {
+  display: flex;
+  align-items: center;
+  gap: var(--space-12);
 }
 
 .shell__title {
@@ -32,33 +59,69 @@
   flex: 1;
 }
 
+.shell__toolbar-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-12);
+}
+
+.shell__cta mat-icon {
+  margin: 0;
+}
+
+.shell__cta {
+  min-width: 44px;
+  padding: 0 10px;
+}
+
+
 .shell__content {
-  padding: 16px;
+  padding: var(--space-16);
+}
+
+.shell__content-inner {
+  max-width: var(--container-max);
+  margin: 0 auto;
 }
 
 .shell__user-button {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  margin-left: 8px;
+  display: flex;
+  justify-content: space-between;
+  margin-left: 4px;
 }
 
 .shell__user-name {
   font-weight: 500;
+  margin-right: 8px;
 }
 
 .shell__sidenav a.active {
-  background: rgba(0, 0, 0, 0.04);
+  background: color-mix(in srgb, var(--primary) 12%, transparent);
+  border-left: 3px solid var(--primary);
+}
+
+.shell__sidenav .mat-mdc-list-item .mdc-list-item__primary-text,
+.shell__sidenav .mat-mdc-list-item .mdc-list-item__content,
+.shell__sidenav .mat-mdc-list-item .mat-icon {
+  color: var(--text);
+}
+
+.shell__sidenav a.active .mat-icon {
+  color: var(--primary);
 }
 
 @media (min-width: 960px) {
   .shell__content {
-    padding: 24px;
+    padding: var(--space-24) var(--space-32) var(--space-32);
   }
 }
 
 @media (max-width: 640px) {
   .shell__user-name {
     display: none;
+  }
+
+  .shell__toolbar-actions {
+    gap: var(--space-8);
   }
 }

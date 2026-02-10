@@ -1,11 +1,31 @@
-<div class="settings">
-  <mat-card>
-    <mat-card-header>
-      <mat-card-title>{{ 'settings.title' | t }}</mat-card-title>
-      <mat-card-subtitle>{{ 'settings.subtitle' | t }}</mat-card-subtitle>
-    </mat-card-header>
-    <mat-card-content>
-      <form class="settings__form" [formGroup]="form">
+<div class="settings-page">
+  <app-page-header [title]="'settings.title' | t" [subtitle]="'settings.subtitle' | t">
+    <div page-actions class="settings__actions">
+      <button mat-stroked-button type="button" (click)="signOut()" [disabled]="isSaving || isLoading">
+        {{ 'menu.signOut' | t }}
+      </button>
+      <button
+        mat-flat-button
+        color="primary"
+        type="button"
+        class="settings__button"
+        [disabled]="isSaving || isLoading"
+        (click)="save()"
+      >
+        @if (isSaving) {
+          <mat-progress-spinner class="settings__spinner" diameter="16" mode="indeterminate"></mat-progress-spinner>
+        }
+        <span>{{ 'common.save' | t }}</span>
+      </button>
+    </div>
+  </app-page-header>
+
+  <form class="settings__grid" [formGroup]="form">
+    <mat-card class="settings__section settings__section--profile">
+      <mat-card-header>
+        <mat-card-title>{{ 'settings.section.profile' | t }}</mat-card-title>
+      </mat-card-header>
+      <mat-card-content class="settings__section-content">
         <mat-form-field appearance="outline">
           <mat-label>{{ 'onboarding.firstNameLabel' | t }}</mat-label>
           <input matInput formControlName="first_name" autocomplete="given-name" />
@@ -20,24 +40,26 @@
               <h3>{{ 'onboarding.avatarTitle' | t }}</h3>
               <p>{{ 'onboarding.avatarSubtitle' | t }}</p>
             </div>
-            <app-avatar
-              [name]="form.controls.first_name.value"
-              [color]="form.controls.avatar_color.value"
-            ></app-avatar>
           </div>
 
           <mat-button-toggle-group
             class="settings__palette-grid"
             formControlName="avatar_color"
             [attr.aria-label]="'onboarding.avatarAria' | t"
+            disableRipple
+            [hideSingleSelectionIndicator]="true"
           >
             @for (color of colors; track color.id) {
               <mat-button-toggle
                 [value]="color.id"
-                class="palette__option palette__option--{{ color.id }}"
+                class="palette__option"
                 [attr.aria-label]="('onboarding.colorPrefix' | t) + ' ' + (color.labelKey | t)"
               >
-                <span class="palette__dot"></span>
+                <app-avatar
+                  class="palette__avatar"
+                  [name]="form.controls.first_name.value"
+                  [color]="color.id"
+                ></app-avatar>
               </mat-button-toggle>
             }
           </mat-button-toggle-group>
@@ -46,7 +68,14 @@
             <p class="settings__error">{{ 'onboarding.avatarError' | t }}</p>
           }
         </div>
+      </mat-card-content>
+    </mat-card>
 
+    <mat-card class="settings__section">
+      <mat-card-header>
+        <mat-card-title>{{ 'settings.section.language' | t }}</mat-card-title>
+      </mat-card-header>
+      <mat-card-content class="settings__section-content">
         <mat-form-field appearance="outline">
           <mat-label>{{ 'settings.languageLabel' | t }}</mat-label>
           <mat-select
@@ -62,7 +91,14 @@
             <mat-error>{{ 'settings.languageError' | t }}</mat-error>
           }
         </mat-form-field>
+      </mat-card-content>
+    </mat-card>
 
+    <mat-card class="settings__section">
+      <mat-card-header>
+        <mat-card-title>{{ 'settings.section.reminders' | t }}</mat-card-title>
+      </mat-card-header>
+      <mat-card-content class="settings__section-content">
         <mat-form-field appearance="outline">
           <mat-label>{{ 'settings.reminderEmailLabel' | t }}</mat-label>
           <input matInput type="email" formControlName="reminder_email" autocomplete="email" />
@@ -78,27 +114,10 @@
           </mat-slide-toggle>
           <p class="settings__hint">{{ 'settings.remindersEnabledHint' | t }}</p>
         </div>
-      </form>
+      </mat-card-content>
+    </mat-card>
 
-      <div class="settings__status" aria-live="polite">
-        @if (isSaving || isLoading) {
-          <mat-progress-spinner diameter="28" mode="indeterminate"></mat-progress-spinner>
-        }
-      </div>
-    </mat-card-content>
-    <mat-card-actions align="end">
-      <button mat-stroked-button type="button" (click)="signOut()" [disabled]="isSaving || isLoading">
-        {{ 'menu.signOut' | t }}
-      </button>
-      <button
-        mat-flat-button
-        color="primary"
-        type="button"
-        [disabled]="isSaving || isLoading"
-        (click)="save()"
-      >
-        {{ 'common.save' | t }}
-      </button>
-    </mat-card-actions>
-  </mat-card>
+  </form>
+
+  <div class="settings__status" aria-live="polite"></div>
 </div>

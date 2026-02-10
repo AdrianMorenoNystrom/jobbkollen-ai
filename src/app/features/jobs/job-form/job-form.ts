@@ -1,3 +1,4 @@
+import { DatePipe } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
@@ -15,6 +16,7 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { firstValueFrom } from 'rxjs';
 import { I18nService } from '../../../core/i18n/i18n.service';
 import { JobsService } from '../../../core/services/jobs.service';
+import { PageHeader } from '../../../shared/components/page-header/page-header';
 import { TranslatePipe } from '../../../shared/pipes/translate.pipe';
 import { DeleteJobDialog } from '../jobs-list/delete-job-dialog/delete-job-dialog';
 import { calculateFollowUpDate, FollowUpPreset } from './follow-up-calculator';
@@ -24,6 +26,7 @@ type JobStatus = 'Applied' | 'Interview' | 'Offer' | 'Rejected';
 @Component({
   selector: 'app-job-form',
   imports: [
+    DatePipe,
     ReactiveFormsModule,
     MatButtonModule,
     MatCardModule,
@@ -36,6 +39,7 @@ type JobStatus = 'Applied' | 'Interview' | 'Offer' | 'Rejected';
     MatProgressSpinnerModule,
     MatSelectModule,
     MatSnackBarModule,
+    PageHeader,
     RouterLink,
     TranslatePipe,
     DeleteJobDialog

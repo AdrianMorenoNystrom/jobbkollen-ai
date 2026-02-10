@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, inject } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -13,9 +13,12 @@ import { RouterLink } from '@angular/router';
 import { firstValueFrom } from 'rxjs';
 import { I18nService } from '../../../core/i18n/i18n.service';
 import { JobsService, Job } from '../../../core/services/jobs.service';
+import { PageHeader } from '../../../shared/components/page-header/page-header';
 import { TranslatePipe } from '../../../shared/pipes/translate.pipe';
 import { DeleteJobDialog } from './delete-job-dialog/delete-job-dialog';
 import { JobCard } from './job-card/job-card';
+
+type SortOption = 'recent' | 'oldest' | 'company' | 'status';
 
 @Component({
   selector: 'app-jobs-list',
@@ -32,38 +35,55 @@ import { JobCard } from './job-card/job-card';
     MatSnackBarModule,
     DeleteJobDialog,
     JobCard,
+    PageHeader,
     RouterLink,
     TranslatePipe
   ],
   templateUrl: './jobs-list.html',
   styleUrl: './jobs-list.scss'
 })
-export class JobsList {
+export class JobsList implements OnInit {
+  private readonly cdr = inject(ChangeDetectorRef);
   protected jobs: Job[] = [];
   protected isLoading = false;
   protected readonly statusControl = new FormControl('all', { nonNullable: true });
   protected readonly searchControl = new FormControl('', { nonNullable: true });
+  protected readonly sortControl = new FormControl<SortOption>('recent', { nonNullable: true });
   protected statusOptions: string[] = ['all'];
+  protected readonly sortOptions: { value: SortOption; labelKey: string }[] = [
+    { value: 'recent', labelKey: 'jobs.sort.recent' },
+    { value: 'oldest', labelKey: 'jobs.sort.oldest' },
+    { value: 'company', labelKey: 'jobs.sort.company' },
+    { value: 'status', labelKey: 'jobs.sort.status' }
+  ];
 
   constructor(
     private readonly jobsService: JobsService,
     private readonly dialog: MatDialog,
     private readonly snackBar: MatSnackBar,
     private readonly i18n: I18nService
-  ) {
+  ) {}
+
+  ngOnInit(): void {
     void this.loadJobs();
+  }
+
+  protected get jobsCountLabel(): string {
+    return this.i18n.translate('jobs.countLabel').replace('{count}', `${this.filteredJobs.length}`);
   }
 
   protected get filteredJobs(): Job[] {
     const statusFilter = this.statusControl.value;
     const term = this.searchControl.value.trim().toLowerCase();
 
-    return this.jobs.filter((job) => {
+    const filtered = this.jobs.filter((job) => {
       const matchesStatus = statusFilter === 'all' || job.status === statusFilter;
       const haystack = `${job.title} ${job.company}`.toLowerCase();
       const matchesSearch = !term || haystack.includes(term);
       return matchesStatus && matchesSearch;
     });
+
+    return this.sortJobs(filtered, this.sortControl.value);
   }
 
   protected statusLabel(status: string): string {
@@ -116,11 +136,13 @@ export class JobsList {
         this.i18n.translate('common.ok'),
         { duration: 4000 }
       );
+      this.cdr.detectChanges();
       return;
     }
 
-    this.jobs = [...data].sort((a, b) => this.toTime(b.applied_on) - this.toTime(a.applied_on));
+    this.jobs = [...data];
     this.updateStatusOptions(this.jobs);
+    this.cdr.detectChanges();
   }
 
   private updateStatusOptions(jobs: Job[]): void {
@@ -131,11 +153,30 @@ export class JobsList {
     }
   }
 
+  private sortJobs(jobs: Job[], sort: SortOption): Job[] {
+    const sorted = [...jobs];
+    switch (sort) {
+      case 'oldest':
+        return sorted.sort((a, b) => this.toTime(a.applied_on) - this.toTime(b.applied_on));
+      case 'company':
+        return sorted.sort((a, b) => this.toText(a.company).localeCompare(this.toText(b.company)));
+      case 'status':
+        return sorted.sort((a, b) => this.toText(a.status).localeCompare(this.toText(b.status)));
+      case 'recent':
+      default:
+        return sorted.sort((a, b) => this.toTime(b.applied_on) - this.toTime(a.applied_on));
+    }
+  }
+
   private toTime(value: string | null): number {
     if (!value) {
       return 0;
     }
     const parsed = new Date(value).getTime();
     return Number.isNaN(parsed) ? 0 : parsed;
+  }
+
+  private toText(value: string | null | undefined): string {
+    return (value ?? '').toString().toLowerCase();
   }
 }

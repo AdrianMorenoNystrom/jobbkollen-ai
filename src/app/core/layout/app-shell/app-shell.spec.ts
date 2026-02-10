@@ -4,7 +4,7 @@ import { AuthService } from '../../services/auth.service';
 import { ProfileService } from '../../services/profile.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
-import { of } from 'rxjs';
+import { Subject, of } from 'rxjs';
 import { I18nService } from '../../i18n/i18n.service';
 
 describe('AppShell', () => {
@@ -12,16 +12,26 @@ describe('AppShell', () => {
   let fixture: ComponentFixture<AppShell>;
 
   beforeEach(async () => {
+    const profileUpdated$ = new Subject<void>();
+
     await TestBed.configureTestingModule({
       imports: [AppShell],
       providers: [
         {
           provide: AuthService,
-          useValue: { authState$: of(null), signOut: () => Promise.resolve({ error: null }) }
+          useValue: {
+            authState$: of(null),
+            getCurrentSession: () => null,
+            signOut: () => Promise.resolve({ error: null })
+          }
         },
         {
           provide: ProfileService,
-          useValue: { getMyProfile: () => Promise.resolve(null) }
+          useValue: {
+            getMyProfile: () => Promise.resolve(null),
+            updateMyProfile: () => Promise.resolve({ error: null }),
+            profileUpdated$
+          }
         },
         {
           provide: MatSnackBar,
@@ -33,8 +43,8 @@ describe('AppShell', () => {
         },
         {
           provide: I18nService,
-          useValue: { translate: (key: string) => key, language: () => 'sv' }
-        }
+          useValue: { translate: (key: string) => key, language: () => 'sv', setLanguage: () => undefined }
+        },
       ]
     })
     .compileComponents();

@@ -24,9 +24,9 @@ type CountdownTone = 'today' | 'upcoming' | 'overdue';
     MatChipsModule,
     MatDialogModule,
     MatIconModule,
+    JobNotesDialog,
     RouterLink,
-    TranslatePipe,
-    JobNotesDialog
+    TranslatePipe
   ],
   templateUrl: './job-card.html',
   styleUrl: './job-card.scss'
@@ -52,8 +52,16 @@ export class JobCard {
     return `job-card__status-chip--${normalized}`;
   }
 
+  protected requestDelete(): void {
+    this.deleteJob.emit(this.job);
+  }
+
   protected get hasNotes(): boolean {
-    return Boolean(this.job?.notes?.trim());
+    return (this.job?.notes ?? '').trim().length > 0;
+  }
+
+  protected get notesActionLabel(): string {
+    return this.i18n.translate(this.hasNotes ? 'jobs.notes.edit' : 'jobs.notes.add');
   }
 
   protected async openNotes(): Promise<void> {
@@ -66,18 +74,11 @@ export class JobCard {
       }
     });
 
-    const updated = await firstValueFrom(dialogRef.afterClosed());
-    if (updated !== undefined) {
-      this.job.notes = updated;
+    const updatedNotes = await firstValueFrom(dialogRef.afterClosed());
+    if (updatedNotes === undefined) {
+      return;
     }
-  }
-
-  protected get notesActionLabel(): string {
-    return this.i18n.translate(this.hasNotes ? 'jobs.notes.edit' : 'jobs.notes.add');
-  }
-
-  protected requestDelete(): void {
-    this.deleteJob.emit(this.job);
+    this.job.notes = updatedNotes;
   }
 
   protected get followUpLabel(): string {

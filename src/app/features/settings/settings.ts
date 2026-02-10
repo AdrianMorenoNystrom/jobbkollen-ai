@@ -1,4 +1,4 @@
-import { Component, effect } from '@angular/core';
+import { ChangeDetectorRef, Component, effect, inject } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
@@ -14,6 +14,7 @@ import { AuthService } from '../../core/services/auth.service';
 import { AppLanguage, I18nService } from '../../core/i18n/i18n.service';
 import { ProfileService } from '../../core/services/profile.service';
 import { Avatar } from '../../shared/components/avatar/avatar';
+import { PageHeader } from '../../shared/components/page-header/page-header';
 import { AVATAR_COLORS } from '../../shared/data/avatar-palette';
 import { TranslatePipe } from '../../shared/pipes/translate.pipe';
 
@@ -31,12 +32,14 @@ import { TranslatePipe } from '../../shared/pipes/translate.pipe';
     MatSlideToggleModule,
     MatSnackBarModule,
     Avatar,
+    PageHeader,
     TranslatePipe
   ],
   templateUrl: './settings.html',
   styleUrl: './settings.scss'
 })
 export class Settings {
+  private readonly cdr = inject(ChangeDetectorRef);
   protected readonly colors = AVATAR_COLORS;
   protected readonly languages: { value: AppLanguage; labelKey: string }[] = [
     { value: 'sv', labelKey: 'settings.languageSv' },
@@ -99,17 +102,21 @@ export class Settings {
     };
 
     this.isSaving = true;
-    const { error } = await this.profileService.updateMyProfile(payload);
-    this.isSaving = false;
+    try {
+      const { error } = await this.profileService.updateMyProfile(payload);
 
-    if (error) {
-      this.snackBar.open(error.message, this.i18n.translate('common.ok'), { duration: 4000 });
-      return;
+      if (error) {
+        this.snackBar.open(error.message, this.i18n.translate('common.ok'), { duration: 4000 });
+        return;
+      }
+
+      this.snackBar.open(this.i18n.translate('settings.saved'), this.i18n.translate('common.ok'), {
+        duration: 3000
+      });
+    } finally {
+      this.isSaving = false;
+      this.cdr.detectChanges();
     }
-
-    this.snackBar.open(this.i18n.translate('settings.saved'), this.i18n.translate('common.ok'), {
-      duration: 3000
-    });
   }
 
   protected async onLanguageChange(language: AppLanguage): Promise<void> {

@@ -1,91 +1,6 @@
-<div class="job-form">
-  <mat-card>
-    <mat-card-header>
-      <mat-card-title>{{ titleText }}</mat-card-title>
-      <mat-card-subtitle>{{ subtitleText }}</mat-card-subtitle>
-    </mat-card-header>
-    <mat-card-content>
-      <form class="job-form__form" [formGroup]="form">
-        <mat-form-field appearance="outline">
-          <mat-label>{{ 'jobForm.titleLabel' | t }}</mat-label>
-          <input matInput formControlName="title" autocomplete="off" />
-          @if (form.controls.title.touched && form.controls.title.invalid) {
-            <mat-error>{{ 'jobForm.requiredError' | t }}</mat-error>
-          }
-        </mat-form-field>
-
-        <mat-form-field appearance="outline">
-          <mat-label>{{ 'jobForm.companyLabel' | t }}</mat-label>
-          <input matInput formControlName="company" autocomplete="organization" />
-          @if (form.controls.company.touched && form.controls.company.invalid) {
-            <mat-error>{{ 'jobForm.requiredError' | t }}</mat-error>
-          }
-        </mat-form-field>
-
-        <mat-form-field appearance="outline">
-          <mat-label>{{ 'jobForm.locationLabel' | t }}</mat-label>
-          <input matInput formControlName="location" autocomplete="address-level2" />
-          @if (form.controls.location.touched && form.controls.location.invalid) {
-            <mat-error>{{ 'jobForm.requiredError' | t }}</mat-error>
-          }
-        </mat-form-field>
-
-        <mat-form-field appearance="outline">
-          <mat-label>{{ 'jobForm.appliedOnLabel' | t }}</mat-label>
-          <input matInput [matDatepicker]="picker" formControlName="applied_on" />
-          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-          <mat-datepicker #picker></mat-datepicker>
-          @if (form.controls.applied_on.touched && form.controls.applied_on.invalid) {
-            <mat-error>{{ 'jobForm.requiredError' | t }}</mat-error>
-          }
-        </mat-form-field>
-
-        <mat-form-field appearance="outline">
-          <mat-label>{{ 'jobForm.statusLabel' | t }}</mat-label>
-          <mat-select formControlName="status">
-            @for (status of statuses; track status.value) {
-              <mat-option [value]="status.value">{{ status.labelKey | t }}</mat-option>
-            }
-          </mat-select>
-          @if (form.controls.status.touched && form.controls.status.invalid) {
-            <mat-error>{{ 'jobForm.requiredError' | t }}</mat-error>
-          }
-        </mat-form-field>
-
-        <mat-form-field appearance="outline">
-          <mat-label>{{ 'jobForm.notesLabel' | t }}</mat-label>
-          <textarea matInput rows="4" formControlName="notes"></textarea>
-          <mat-hint>{{ 'jobForm.notesHint' | t }}</mat-hint>
-        </mat-form-field>
-
-        <mat-form-field appearance="outline">
-          <mat-label>{{ 'jobForm.jobUrlLabel' | t }}</mat-label>
-          <input matInput type="url" formControlName="job_url" autocomplete="url" />
-          <mat-hint>{{ 'jobForm.jobUrlHint' | t }}</mat-hint>
-          @if (form.controls.job_url.touched && form.controls.job_url.invalid) {
-            <mat-error>{{ 'jobForm.jobUrlError' | t }}</mat-error>
-          }
-        </mat-form-field>
-
-        <mat-form-field appearance="outline">
-          <mat-label>{{ 'jobForm.followUpPresetLabel' | t }}</mat-label>
-          <mat-select formControlName="follow_up_preset">
-            @for (preset of followUpPresets; track preset.value) {
-              <mat-option [value]="preset.value">{{ preset.labelKey | t }}</mat-option>
-            }
-          </mat-select>
-          <mat-hint>{{ 'jobForm.followUpPresetHint' | t }}</mat-hint>
-        </mat-form-field>
-
-      </form>
-
-      <div class="job-form__status" aria-live="polite">
-        @if (isLoading || isSaving) {
-          <mat-progress-spinner diameter="28" mode="indeterminate"></mat-progress-spinner>
-        }
-      </div>
-    </mat-card-content>
-    <mat-card-actions align="end" class="job-form__actions">
+<div class="job-form-page">
+  <app-page-header [title]="titleText" [subtitle]="subtitleText">
+    <div page-actions class="job-form__header-actions">
       <button mat-stroked-button type="button" routerLink="/app/jobs" [disabled]="isSaving">
         {{ 'common.cancel' | t }}
       </button>
@@ -109,6 +24,124 @@
       >
         {{ 'common.save' | t }}
       </button>
-    </mat-card-actions>
-  </mat-card>
+    </div>
+  </app-page-header>
+
+  <form class="job-form__grid" [formGroup]="form">
+    <mat-card class="job-form__section job-form__section--full">
+      <mat-card-header>
+        <mat-card-title>{{ 'jobForm.sectionInfo' | t }}</mat-card-title>
+      </mat-card-header>
+      <mat-card-content class="job-form__section-content">
+        <div class="job-form__fields">
+          <mat-form-field appearance="outline" class="job-form__field job-form__field--full">
+            <mat-label>{{ 'jobForm.titleLabel' | t }}</mat-label>
+            <input matInput formControlName="title" autocomplete="off" />
+            @if (form.controls.title.touched && form.controls.title.invalid) {
+              <mat-error>{{ 'jobForm.requiredError' | t }}</mat-error>
+            }
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="job-form__field">
+            <mat-label>{{ 'jobForm.companyLabel' | t }}</mat-label>
+            <input matInput formControlName="company" autocomplete="organization" />
+            @if (form.controls.company.touched && form.controls.company.invalid) {
+              <mat-error>{{ 'jobForm.requiredError' | t }}</mat-error>
+            }
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="job-form__field">
+            <mat-label>{{ 'jobForm.locationLabel' | t }}</mat-label>
+            <input matInput formControlName="location" autocomplete="address-level2" />
+            @if (form.controls.location.touched && form.controls.location.invalid) {
+              <mat-error>{{ 'jobForm.requiredError' | t }}</mat-error>
+            }
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="job-form__field">
+            <mat-label>{{ 'jobForm.appliedOnLabel' | t }}</mat-label>
+            <input matInput [matDatepicker]="picker" formControlName="applied_on" />
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+            @if (form.controls.applied_on.touched && form.controls.applied_on.invalid) {
+              <mat-error>{{ 'jobForm.requiredError' | t }}</mat-error>
+            }
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="job-form__field">
+            <mat-label>{{ 'jobForm.statusLabel' | t }}</mat-label>
+            <mat-select formControlName="status">
+              @for (status of statuses; track status.value) {
+                <mat-option [value]="status.value">{{ status.labelKey | t }}</mat-option>
+              }
+            </mat-select>
+            @if (form.controls.status.touched && form.controls.status.invalid) {
+              <mat-error>{{ 'jobForm.requiredError' | t }}</mat-error>
+            }
+          </mat-form-field>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="job-form__section">
+      <mat-card-header>
+        <mat-card-title>{{ 'jobForm.sectionFollowUp' | t }}</mat-card-title>
+      </mat-card-header>
+      <mat-card-content class="job-form__section-content">
+        <div class="job-form__fields">
+          <mat-form-field appearance="outline" class="job-form__field">
+            <mat-label>{{ 'jobForm.followUpPresetLabel' | t }}</mat-label>
+            <mat-select formControlName="follow_up_preset">
+              @for (preset of followUpPresets; track preset.value) {
+                <mat-option [value]="preset.value">{{ preset.labelKey | t }}</mat-option>
+              }
+            </mat-select>
+            <mat-hint>{{ 'jobForm.followUpPresetHint' | t }}</mat-hint>
+          </mat-form-field>
+
+          <div class="job-form__readonly job-form__field--full">
+            <span class="job-form__readonly-label">{{ 'jobForm.followUpCalculatedLabel' | t }}</span>
+            <span class="job-form__readonly-value">
+              @if (computedFollowUpOn) {
+                {{ computedFollowUpOn | date: 'mediumDate' }}
+              } @else {
+                {{ 'jobForm.followUpCalculatedEmpty' | t }}
+              }
+            </span>
+            <span class="job-form__readonly-hint">{{ 'jobForm.followUpCalculatedHint' | t }}</span>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="job-form__section">
+      <mat-card-header>
+        <mat-card-title>{{ 'jobForm.sectionExtra' | t }}</mat-card-title>
+      </mat-card-header>
+      <mat-card-content class="job-form__section-content">
+        <div class="job-form__fields">
+          <mat-form-field appearance="outline" class="job-form__field job-form__field--full">
+            <mat-label>{{ 'jobForm.jobUrlLabel' | t }}</mat-label>
+            <input matInput type="url" formControlName="job_url" autocomplete="url" />
+            <mat-hint>{{ 'jobForm.jobUrlHint' | t }}</mat-hint>
+            @if (form.controls.job_url.touched && form.controls.job_url.invalid) {
+              <mat-error>{{ 'jobForm.jobUrlError' | t }}</mat-error>
+            }
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="job-form__field job-form__field--full">
+            <mat-label>{{ 'jobForm.notesLabel' | t }}</mat-label>
+            <textarea matInput rows="4" formControlName="notes"></textarea>
+            <mat-hint>{{ 'jobForm.notesHint' | t }}</mat-hint>
+          </mat-form-field>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </form>
+
+  <div class="job-form__status" aria-live="polite">
+    @if (isLoading || isSaving) {
+      <mat-progress-spinner diameter="28" mode="indeterminate"></mat-progress-spinner>
+    }
+  </div>
 </div>
